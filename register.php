@@ -1,5 +1,8 @@
 <?php
 include 'D:\XAMPP\htdocs\AdminLTE-3.2.0\config.php';
+if(!isset($_SESSION['userid'])){
+    header("Location: index.php");
+}
 
 session_start();
 

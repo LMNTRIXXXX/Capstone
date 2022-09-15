@@ -3,6 +3,10 @@ include 'D:\XAMPP\htdocs\AdminLTE-3.2.0\config.php';
 session_start();
 $id = $_SESSION['userid'];
 
+if(!isset($_SESSION['userid'])){
+  header("Location: index.php");
+}
+
 ?>
 
 <!DOCTYPE html>
@@ -150,6 +154,11 @@ $id = $_SESSION['userid'];
           <div class="dropdown-divider"></div>
           <a href="#" class="dropdown-item dropdown-footer">See All Notifications</a>
         </div>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" data-widget="fullscreen" href="#" role="button">
+          <i class="fas fa-expand-arrows-alt"></i>
+        </a>
       </li>
       <li class="nav-item">
         <a class="nav-link" data-widget="fullscreen" href="#" role="button">

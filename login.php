@@ -2,6 +2,9 @@
 include 'D:\XAMPP\htdocs\AdminLTE-3.2.0\config.php';
 
 session_start();
+if(isset($_SESSION['userid'])){
+    header("Location: index.php");
+}
 
 if(isset($_POST['submit']))
 {
