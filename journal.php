@@ -1,65 +1,51 @@
 <?php
 include 'D:\XAMPP\htdocs\AdminLTE-3.2.0\config.php';
 session_start();
+$id = $_SESSION['userid'];
 
 if(!isset($_SESSION['userid'])){
   header("Location: login.php");
 }
 
-if(isset($_POST['submit'])) 
-{
-    $id = $_SESSION['userid'];
-    $foldername =($_POST['foldername']);
-
-    $sql = "INSERT INTO folder(userid, foldername)VALUES($id, :foldername)";
-    $query = $dbh->prepare($sql);
-    $query->bindParam(':foldername', $foldername, PDO::PARAM_STR);
-    $query->execute();
-    header("Location: index.php");
-}
-    
 ?>
 
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>OVERFLOW</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>OVERFLOW</title>
 
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
 
-  <link rel="stylesheet" type="text/css" href="style2.css">
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
-
-  <!-- Google Font: Source Sans Pro -->
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
-  <!-- Font Awesome Icons -->
-  <link rel="stylesheet" href="plugins/fontawesome-free/css/all.min.css">
-  <!-- overlayScrollbars -->
-  <link rel="stylesheet" href="plugins/overlayScrollbars/css/OverlayScrollbars.min.css">
-  <!-- Theme style -->
-  <link rel="stylesheet" href="dist/css/adminlte.min.css">
+<!-- Google Font: Source Sans Pro -->
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+<!-- Font Awesome Icons -->
+<link rel="stylesheet" href="plugins/fontawesome-free/css/all.min.css">
+<!-- overlayScrollbars -->
+<link rel="stylesheet" href="plugins/overlayScrollbars/css/OverlayScrollbars.min.css">
+<!-- Theme style -->
+<link rel="stylesheet" href="dist/css/adminlte.min.css">
 </head>
 <body class="hold-transition dark-mode sidebar-mini layout-fixed layout-navbar-fixed layout-footer-fixed">
 <div class="wrapper">
 
-  <!-- Preloader -->
-  
+<!-- Preloader -->
 
-  <!-- Navbar -->
-  <nav class="main-header navbar navbar-expand navbar-dark">
+
+<!-- Navbar -->
+<nav class="main-header navbar navbar-expand navbar-dark">
     <!-- Left navbar links -->
     <ul class="navbar-nav">
-      <li class="nav-item">
+    <li class="nav-item">
         <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
-      </li>
-      <li class="nav-item d-none d-sm-inline-block">
+    </li>
+    <li class="nav-item d-none d-sm-inline-block">
         <a href="index.php" class="nav-link">Home</a>
-      </li>
-      <li class="nav-item d-none d-sm-inline-block">
+    </li>
+    <li class="nav-item d-none d-sm-inline-block">
         <a href="#" class="nav-link">Contact</a>
-      </li>
+    </li>
     </ul>
 
     <!-- Right navbar links -->
@@ -231,12 +217,12 @@ if(isset($_POST['submit']))
             
               
               <li class="nav-item">
-                <a href="./index.php" class="nav-link active">
+                <a href="./index.php">
                   <p>NOTES</p>
                 </a>
               </li>
               <li class="nav-item">
-                <a href="./journal.php">
+                <a href="./journal.php" class="nav-link active">
                   <p>JOURNAL</p>
                 </a>
               </li>
@@ -254,41 +240,7 @@ if(isset($_POST['submit']))
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <div class="align-folder">
-              <div class="folder">
-                <div class="align"><h1>Folders</h1> <button style="background-color:gray" data-toggle="modal" data-target="#exampleModalCenter"><i class="fa-solid fa-plus" ></i></button></div>
-                <div class="folders">
-                  <?php
-                    $sql = "SELECT * FROM folder WHERE userid=$id";
-                    $query=$dbh->prepare($sql);
-                  $query->execute();
-                  $results=$query->fetchALL(PDO::FETCH_OBJ);
-
-                  $cnt=1;
-                  if ($query->rowCount()>0) {
-                  # code...
-                  foreach ($results as $result) 
-                  {
-                  ?>
-                  <button class="folderbutton" type="button"><i class="fa-solid fa-folder"  style="margin-right:10px; "></i> <?php echo htmlentities($result->foldername);?></button>
-                  <?php
-                  }
-                }
-                  ?>
-                </div>
-              </div>
-              <div class="notess">
-              <div class="aligns">
-                <h1>NOTES</h1>  
-                <div class="btnss">
-                <button style="background-color:gray" name="submit"><i class="fa-solid fa-plus" ></i></button>
-                <button style="background-color:gray"><i class="fa-sharp fa-solid fa-pen-to-square"></i></button>
-                <button style="background-color:gray"><i class="fa-solid fa-trash"></i></button>
-                  
-                  </div>
-              </div>
-                  </div>
-              </div>
+          
           </div><!-- /.col -->
         
         </div><!-- /.row -->
@@ -310,41 +262,6 @@ if(isset($_POST['submit']))
   
 </div>
 <!-- ./wrapper -->
-
-<!-- MODALS -->
-
-<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLongTitle">Add Folder</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-      <form method="POST">
-  <div class="form-group">
-    <label for="exampleInputEmail1">Folder Name</label>
-    <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Folder Name" name="foldername">
-  </div>
-
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button type="submit" class="btn btn-primary" name="submit">Add</button>
-        </form>
-      </div>
-    </div>
-  </div>
-</div>
-
-
-
-          
-                  
-<!-- END MODALS -->
-
 
 <!-- REQUIRED SCRIPTS -->
 <!-- jQuery -->

@@ -1,10 +1,10 @@
 <?php
 include 'D:\XAMPP\htdocs\AdminLTE-3.2.0\config.php';
-if(!isset($_SESSION['userid'])){
+session_start();
+
+if(isset($_SESSION['userid'])){
     header("Location: index.php");
 }
-
-session_start();
 
 if(isset($_POST['submit']))
 {
@@ -20,6 +20,7 @@ if(isset($_POST['submit']))
     $query->bindParam(':email', $email, PDO::PARAM_STR);
     $query->bindParam(':password', $password, PDO::PARAM_STR);
     $query->execute();
+    header("Location: login.php");
 
 }
 ?>
