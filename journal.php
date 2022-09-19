@@ -1,5 +1,5 @@
 <?php
-include 'D:\XAMPP\htdocs\AdminLTE-3.2.0\config.php';
+include 'C:\XAMPP\htdocs\AdminLTE-3.2.0\config.php';
 session_start();
 $id = $_SESSION['userid'];
 
@@ -15,7 +15,7 @@ if(!isset($_SESSION['userid'])){
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>OVERFLOW</title>
-
+<script src="https://cdn.ckeditor.com/ckeditor5/35.0.1/classic/ckeditor.js"></script>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
 
 <!-- Google Font: Source Sans Pro -->
@@ -240,7 +240,9 @@ if(!isset($_SESSION['userid'])){
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-          
+          <div id="editor" style="color:black";>
+          <p> sample </p>
+          </div>
           </div><!-- /.col -->
         
         </div><!-- /.row -->
@@ -264,6 +266,14 @@ if(!isset($_SESSION['userid'])){
 <!-- ./wrapper -->
 
 <!-- REQUIRED SCRIPTS -->
+
+<script>
+    ClassicEditor
+        .create( document.querySelector( '#editor' ) )
+        .catch( error => {
+            console.error( error );
+        } );
+</script>
 <!-- jQuery -->
 <script src="plugins/jquery/jquery.min.js"></script>
 <!-- Bootstrap -->

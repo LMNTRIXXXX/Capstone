@@ -1,5 +1,5 @@
 <?php
-include 'D:\XAMPP\htdocs\AdminLTE-3.2.0\config.php';
+include 'C:\XAMPP\htdocs\AdminLTE-3.2.0\config.php';
 
 session_start();
 if(isset($_SESSION['userid'])){

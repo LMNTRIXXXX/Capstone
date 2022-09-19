@@ -1,5 +1,5 @@
 <?php
-include 'D:\XAMPP\htdocs\AdminLTE-3.2.0\config.php';
+include 'C:\XAMPP\htdocs\AdminLTE-3.2.0\config.php';
 session_start();
 
 if(!isset($_SESSION['userid'])){
@@ -270,7 +270,8 @@ if(isset($_POST['submit']))
                   foreach ($results as $result) 
                   {
                   ?>
-                  <button class="folderbutton" type="button"><i class="fa-solid fa-folder"  style="margin-right:10px; "></i> <?php echo htmlentities($result->foldername);?></button>
+                  <a href="journal.php?folderid=<?php echo htmlentities($result->folderid)?>"><button class="folderbutton" type="button"><i class="fa-solid fa-folder"  style="margin-right:10px; "></i> <?php echo htmlentities($result->foldername);?></button></a>
+                  
                   <?php
                   }
                 }
@@ -287,6 +288,7 @@ if(isset($_POST['submit']))
                   
                   </div>
               </div>
+              <button class="notesbutton" type="button"><i class="fa-solid fa-folder"  style="margin-right:10px; "></i>HI</button>
                   </div>
               </div>
           </div><!-- /.col -->
@@ -364,6 +366,7 @@ if(isset($_POST['submit']))
 <script src="plugins/jquery-mapael/maps/usa_states.min.js"></script>
 <!-- ChartJS -->
 <script src="plugins/chart.js/Chart.min.js"></script>
+
 
 
 <!-- AdminLTE dashboard demo (This is only for demo purposes) -->

@@ -1,10 +1,12 @@
 .folder{
-	height:500px;
+	height: 39.6vw;
 	width:200px;
 	margin:10px;
 	padding-left: 5px;
     padding-top: 10px;
-	border:1px solid white;
+    background-color: #c6c6c6da;
+    color:black;
+    border-radius: 10px;
 }
 
 /* .notif{
@@ -28,8 +30,10 @@
     height: 39.6vw;
 	margin:10px;
 	padding:20px;
-	border:1px solid white;
+	background-color: #c6c6c6da;
     box-sizing: border-box;
+    color: black;
+    border-radius: 7px;
 }
 .align-folder{
     display:flex;
@@ -46,10 +50,20 @@
     margin-top: 10px;
     overflow: auto;
     height:420px;
+    
 }
 .folderbutton{
     width: 100%;
     height: 40px;
+    margin:10px 0px;
+    text-align: left;
+    text-transform: lowercase;
+    border-radius: 7px;
+}
+
+.notesbutton{
+    height: 40px;
+    width: 20%;
     margin:10px 0px;
     text-align: left;
     text-transform: lowercase;
