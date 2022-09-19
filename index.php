@@ -2,10 +2,17 @@
 include 'C:\XAMPP\htdocs\AdminLTE-3.2.0\config.php';
 session_start();
 
-$folderid=($_GET['folderid']);
+
 
 if(!isset($_SESSION['userid'])){
   header("Location: login.php");
+}
+
+if(!isset($_GET['folderid'])){
+  
+}
+else{
+  $folderid=($_GET['folderid']);
 }
 
 if(isset($_POST['submit'])) 
