@@ -270,7 +270,7 @@ if(isset($_POST['submit']))
                   foreach ($results as $result) 
                   {
                   ?>
-                  <a href="journal.php?folderid=<?php echo htmlentities($result->folderid)?>"><button class="folderbutton" type="button"><i class="fa-solid fa-folder"  style="margin-right:10px; "></i> <?php echo htmlentities($result->foldername);?></button></a>
+                  <a href="journal.php?folderid=<?php echo htmlentities($result->folderid)?>"><button class="folderbutton" type="button"><i class="fa-solid fa-folder"  style="margin-right:10px; "></i> <?php echo htmlentities($result->foldername);?><?php echo htmlentities($result->folderid);?></button></a>
                   
                   <?php
                   }
