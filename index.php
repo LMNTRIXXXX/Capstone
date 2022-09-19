@@ -2,6 +2,8 @@
 include 'C:\XAMPP\htdocs\AdminLTE-3.2.0\config.php';
 session_start();
 
+$folderid=($_GET['folderid']);
+
 if(!isset($_SESSION['userid'])){
   header("Location: login.php");
 }
@@ -17,6 +19,9 @@ if(isset($_POST['submit']))
     $query->execute();
     header("Location: index.php");
 }
+
+
+
     
 ?>
 
@@ -270,7 +275,7 @@ if(isset($_POST['submit']))
                   foreach ($results as $result) 
                   {
                   ?>
-                  <a href="journal.php?folderid=<?php echo htmlentities($result->folderid)?>"><button class="folderbutton" type="button"><i class="fa-solid fa-folder"  style="margin-right:10px; "></i> <?php echo htmlentities($result->foldername);?><?php echo htmlentities($result->folderid);?></button></a>
+                  <a href="index.php?folderid=<?php echo htmlentities($result->folderid)?>"><button class="folderbutton" type="button"><i class="fa-solid fa-folder"  style="margin-right:10px; "></i> <?php echo htmlentities($result->foldername);?><?php echo htmlentities($result->folderid);?></button></a>
                   
                   <?php
                   }
@@ -289,6 +294,21 @@ if(isset($_POST['submit']))
                   </div>
               </div>
               <button class="notesbutton" type="button"><i class="fa-solid fa-folder"  style="margin-right:10px; "></i>HI</button>
+              <br>
+              <?php
+              if($folderid == null){
+              ?>
+              <div class="warning"> <i class="fa-solid fa-face-sad-tear"></i> Select Folder <i class="fa-solid fa-face-smile"></i></div>
+              <?php
+              }
+              else{
+                
+              
+              ?>
+              <div class="warning"> <i class="fa-solid fa-face-sad-tear"></i> No Notes Found! Make some <i class="fa-solid fa-face-smile"></i></div>
+              <?php
+              }
+              ?>
                   </div>
               </div>
           </div><!-- /.col -->

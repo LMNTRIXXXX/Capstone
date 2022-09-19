@@ -9,7 +9,6 @@ if(isset($_SESSION['userid'])){
 if(isset($_POST['submit']))
 {
     $email = strtolower ($_POST['email']);
-    $firstname = strtolower ($_POST['firstname']);
     $password = md5 ($_POST['password']);
 
     $sql = "SELECT * FROM user where email=:email AND password =:password";

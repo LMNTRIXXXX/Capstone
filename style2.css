@@ -69,3 +69,15 @@
     text-transform: lowercase;
     border-radius: 7px;
 }
+
+.warning{
+    height:80px;
+    width: 100%;
+    border:1px solid black;
+    font-style: italic;
+    color:white;
+    background-color: black;
+    font-size: 30px;
+    text-align: center;
+    padding-top:15px;
+}
