@@ -271,8 +271,8 @@ if(isset($_POST['submit']))
                 <div class="align"><h1>Folders</h1> <button style="background-color:gray" data-toggle="modal" data-target="#exampleModalCenter"><i class="fa-solid fa-plus" ></i></button></div>
                 <div class="folders">
                   <?php
-                    $sql = "SELECT * FROM folder WHERE userid=$id";
-                    $query=$dbh->prepare($sql);
+                  $sql = "SELECT * FROM folder WHERE userid=$id";
+                  $query=$dbh->prepare($sql);
                   $query->execute();
                   $results=$query->fetchALL(PDO::FETCH_OBJ);
 
@@ -300,8 +300,7 @@ if(isset($_POST['submit']))
                   
                   </div>
               </div>
-              <button class="notesbutton" type="button"><i class="fa-solid fa-folder"  style="margin-right:10px; "></i>HI</button>
-              <br>
+
               <?php
               if($folderid == null){
               ?>
@@ -310,10 +309,28 @@ if(isset($_POST['submit']))
               }
               else{
                 
-              
+                $sql = "SELECT * FROM notes
+                INNER JOIN folder ON notes.folderid = folder.folderid
+                WHERE notes.folderid=$folderid";
+                $query=$dbh->prepare($sql);
+                $query->execute();
+                $results=$query->fetchALL(PDO::FETCH_OBJ);
+
+                $cnt=1;
+                if ($query->rowCount()>0) {
+                foreach ($results as $result)
+                {
+              ?>
+              <button class="notesbutton" type="button"><i class="fa-solid fa-folder"  style="margin-right:10px; "></i> <?php echo htmlentities($result->notescontent); ?></button>
+              <br>
+              <?php
+                }
+              }
+              else{            
               ?>
               <div class="warning"> <i class="fa-solid fa-face-sad-tear"></i> No Notes Found! Make some <i class="fa-solid fa-face-smile"></i></div>
               <?php
+              }
               }
               ?>
                   </div>
