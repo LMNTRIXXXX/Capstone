@@ -9,7 +9,7 @@ if(!isset($_SESSION['userid'])){
 }
 
 if(!isset($_GET['folderid'])){
-  
+  $folderid=null;
 }
 else{
   $folderid=($_GET['folderid']);
