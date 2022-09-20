@@ -3,7 +3,7 @@ include 'C:\XAMPP\htdocs\AdminLTE-3.2.0\config.php';
 session_start();
 
 
-
+$date = date('Y-m-d H:i:s');
 if(!isset($_SESSION['userid'])){
   header("Location: login.php");
 }
@@ -27,6 +27,27 @@ if(isset($_POST['submit']))
     header("Location: index.php");
 }
 
+if(isset($_POST['submits']))
+{ 
+  if(!isset($_GET['folderid'])){
+    $folderid=null;
+  }
+  else{
+    $folderid=($_GET['folderid']);
+  }
+  $id = $_SESSION['userid'];
+  $notesname = ($_POST['notesname']);
+  $notescontent = ($_POST['notescontent']);
+
+  $sql = "INSERT INTO notes(folderid, userid, notesname, notescontent)VALUES($folderid, $id, :notesname, :notescontent)";
+  $query = $dbh->prepare($sql);
+  $query->bindParam(':notesname', $notesname, PDO::PARAM_STR);
+  $query->bindParam(':notescontent', $notescontent, PDO::PARAM_STR);
+  $query->execute();
+  header("Location: index.php");
+  
+}
+
 
 
     
@@ -38,6 +59,10 @@ if(isset($_POST['submit']))
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>OVERFLOW</title>
+
+  <script src="https://cdn.ckeditor.com/4.19.1/standard/ckeditor.js"></script>
+
+
 
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
@@ -282,7 +307,7 @@ if(isset($_POST['submit']))
                   foreach ($results as $result) 
                   {
                   ?>
-                  <a href="index.php?folderid=<?php echo htmlentities($result->folderid)?>"><button class="folderbutton" type="button"><i class="fa-solid fa-folder"  style="margin-right:10px; "></i> <?php echo htmlentities($result->foldername);?><?php echo htmlentities($result->folderid);?></button></a>
+                  <a href="index.php?folderid=<?php echo htmlentities($result->folderid)?>"><button class="folderbutton" type="button"><i class="fa-solid fa-folder"  style="margin-right:10px; "></i> <?php echo htmlentities($result->foldername);?></button></a>
                   
                   <?php
                   }
@@ -294,7 +319,7 @@ if(isset($_POST['submit']))
               <div class="aligns">
                 <h1>NOTES</h1>  
                 <div class="btnss">
-                <button style="background-color:gray" name="submit"><i class="fa-solid fa-plus" ></i></button>
+                <button style="background-color:gray" name="submit" data-toggle="modal" data-toggle="modal" data-target="#myModal"><i class="fa-solid fa-plus" ></i></button>
                 <button style="background-color:gray"><i class="fa-sharp fa-solid fa-pen-to-square"></i></button>
                 <button style="background-color:gray"><i class="fa-solid fa-trash"></i></button>
                   
@@ -321,7 +346,7 @@ if(isset($_POST['submit']))
                 foreach ($results as $result)
                 {
               ?>
-              <button class="notesbutton" type="button"><i class="fa-solid fa-folder"  style="margin-right:10px; "></i> <?php echo htmlentities($result->notescontent); ?></button>
+              <button class="notesbutton" type="button"><i class="fa-solid fa-folder"  style="margin-right:10px; "></i> <?php echo htmlentities($result->notesname); ?></button>
               <br>
               <?php
                 }
@@ -384,6 +409,39 @@ if(isset($_POST['submit']))
     </div>
   </div>
 </div>
+
+<!--Large Modal-->
+
+<!-- The Modal -->
+<div class="modal fade" id="myModal">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+      
+        <!-- Modal Header -->
+        <div class="modal-header">
+          <h4 class="modal-title">Modal Heading</h4>
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+        </div>
+        
+        <!-- Modal body -->
+        <form method="POST">
+        <div class="modal-body" style="color:black">
+        <input type="text" class="form-control" placeholder="Notes Name" name="notesname" style="color:black; background-color:white;">
+          <br>
+          <textarea name="notescontent"></textarea>
+                <script>
+                        CKEDITOR.replace('notescontent');
+                </script>
+        </div>
+        <!-- Modal footer -->
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <button type="submit" class="btn btn-primary" name="submits">Add</button>
+        </div>
+        
+      </div>
+    </div>
+  </div>
 
 
 
