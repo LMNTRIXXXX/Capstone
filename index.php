@@ -29,12 +29,10 @@ if(isset($_POST['submit']))
 
 if(isset($_POST['submits']))
 { 
-  if(!isset($_GET['folderid'])){
-    $folderid=null;
-  }
-  else{
-    $folderid=($_GET['folderid']);
-  }
+  
+  
+  $folderid=($_GET['folderid']);
+  
   $id = $_SESSION['userid'];
   $notesname = ($_POST['notesname']);
   $notescontent = ($_POST['notescontent']);
