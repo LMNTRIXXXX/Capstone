@@ -30,14 +30,14 @@ if(isset($_POST['submit']))
 if(isset($_POST['submits']))
 { 
   
-  
+
   $folderid=($_GET['folderid']);
-  
   $id = $_SESSION['userid'];
   $notesname = ($_POST['notesname']);
   $notescontent = ($_POST['notescontent']);
+  $date = date('Y-m-d H:i:s');
 
-  $sql = "INSERT INTO notes(folderid, userid, notesname, notescontent)VALUES($folderid, $id, :notesname, :notescontent)";
+  $sql = "INSERT INTO notes(folderid, userid, notesname, notescontent, date)VALUES($folderid, $id, :notesname, :notescontent, NOW())";
   $query = $dbh->prepare($sql);
   $query->bindParam(':notesname', $notesname, PDO::PARAM_STR);
   $query->bindParam(':notescontent', $notescontent, PDO::PARAM_STR);
