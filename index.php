@@ -48,6 +48,7 @@ if(isset($_POST['submits']))
 
 
 
+
     
 ?>
 
@@ -344,7 +345,9 @@ if(isset($_POST['submits']))
                 foreach ($results as $result)
                 {
               ?>
-              <button class="notesbutton" type="button"><i class="fa-solid fa-folder"  style="margin-right:10px; "></i> <?php echo htmlentities($result->notesname); ?></button>
+              <button class="notesbutton" type="button" data-toggle="modal" data-target="#myModal1"><i class="fa-solid fa-folder"  style="margin-right:10px; "></i> <?php echo htmlentities($result->notesname); ?>
+              
+            </button>
               <br>
               <?php
                 }
@@ -417,7 +420,7 @@ if(isset($_POST['submits']))
       
         <!-- Modal Header -->
         <div class="modal-header">
-          <h4 class="modal-title">Modal Heading</h4>
+          <h4 class="modal-title">Add Notes</h4>
           <button type="button" class="close" data-dismiss="modal">&times;</button>
         </div>
         
@@ -426,9 +429,9 @@ if(isset($_POST['submits']))
         <div class="modal-body" style="color:black">
         <input type="text" class="form-control" placeholder="Notes Name" name="notesname" style="color:black; background-color:white;">
           <br>
-          <textarea name="notescontent"></textarea>
+          <textarea name="notescontentt"></textarea>
                 <script>
-                        CKEDITOR.replace('notescontent');
+                        CKEDITOR.replace('notescontentt');
                 </script>
         </div>
         <!-- Modal footer -->
@@ -440,6 +443,40 @@ if(isset($_POST['submits']))
       </div>
     </div>
   </div>
+
+
+  <div class="modal fade" id="myModal1">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+      
+        <!-- Modal Header -->
+        <div class="modal-header">
+          <h4 class="modal-title">Edit Notes</h4>
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+        </div>
+        
+        <!-- Modal body -->
+        
+        <form method="POST">
+        <div class="modal-body" style="color:black">
+        <input type="text" class="form-control" placeholder="Notes Name" name="notesname" style="color:black; background-color:white;">
+          <br>
+          <textarea name="notescontent"></textarea>
+                <script>
+                        CKEDITOR.replace('notescontent');
+                </script>
+        </div>
+        
+        <!-- Modal footer -->
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <button type="submit" class="btn btn-primary" name="submits">Add</button>
+        </div>
+        
+      </div>
+    </div>
+  </div>
+
 
 
 
