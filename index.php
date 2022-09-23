@@ -1,5 +1,5 @@
 <?php
-include 'C:\XAMPP\htdocs\AdminLTE-3.2.0\config.php';
+include 'D:\PROGRAMMING SOFTWARES\XAMPP\htdocs\Capstone\config.php';
 session_start();
 
 
@@ -76,6 +76,7 @@ if(isset($_POST['submits']))
   <link rel="stylesheet" href="plugins/overlayScrollbars/css/OverlayScrollbars.min.css">
   <!-- Theme style -->
   <link rel="stylesheet" href="dist/css/adminlte.min.css">
+  
 </head>
 <body class="hold-transition dark-mode sidebar-mini layout-fixed layout-navbar-fixed layout-footer-fixed">
 <div class="wrapper">
@@ -345,10 +346,14 @@ if(isset($_POST['submits']))
                 foreach ($results as $result)
                 {
               ?>
-              <button class="notesbutton" type="button" data-toggle="modal" data-target="#myModal1"><i class="fa-solid fa-folder"  style="margin-right:10px; "></i> <?php echo htmlentities($result->notesname); ?>
+              <button class="notesbutton" type="button" data-toggle="modal" data-target="#myModal1<?php echo htmlentities($result->notesid); ?>"><i class="fa-solid fa-folder"  style="margin-right:10px; "></i> <?php echo htmlentities($result->notesname); ?>
               
             </button>
               <br>
+                
+               <?php include('notes.php'); ?> 
+  </div>
+
               <?php
                 }
               }
@@ -445,37 +450,7 @@ if(isset($_POST['submits']))
   </div>
 
 
-  <div class="modal fade" id="myModal1">
-    <div class="modal-dialog modal-lg">
-      <div class="modal-content">
-      
-        <!-- Modal Header -->
-        <div class="modal-header">
-          <h4 class="modal-title">Edit Notes</h4>
-          <button type="button" class="close" data-dismiss="modal">&times;</button>
-        </div>
-        
-        <!-- Modal body -->
-        
-        <form method="POST">
-        <div class="modal-body" style="color:black">
-        <input type="text" class="form-control" placeholder="Notes Name" name="notesname" style="color:black; background-color:white;">
-          <br>
-          <textarea name="notescontent"></textarea>
-                <script>
-                        CKEDITOR.replace('notescontent');
-                </script>
-        </div>
-        
-        <!-- Modal footer -->
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-          <button type="submit" class="btn btn-primary" name="submits">Add</button>
-        </div>
-        
-      </div>
-    </div>
-  </div>
+
 
 
 
@@ -485,6 +460,7 @@ if(isset($_POST['submits']))
 <!-- END MODALS -->
 
 
+</script>
 <!-- REQUIRED SCRIPTS -->
 <!-- jQuery -->
 <script src="plugins/jquery/jquery.min.js"></script>
