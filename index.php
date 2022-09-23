@@ -431,13 +431,12 @@ if(isset($_POST['submits']))
         
         <!-- Modal body -->
         <form method="POST">
-        <div class="modal-body" style="color:black">
-        <input type="text" class="form-control" placeholder="Notes Name" name="notesname" style="color:black; background-color:white;">
+        <div class="modal-body" style="color:black;">
+        <input type="text" class="form-control" placeholder="Notes Name" name="notesname" required style="color:black; background-color:white;">
           <br>
-          <textarea name="notescontentt"></textarea>
-                <script>
-                        CKEDITOR.replace('notescontentt');
-                </script>
+          <div style="background-color: #FFFFFF; color:black;">
+          <textarea name="notescontent" style="width: 765px; height: 200px; padding: 20px;"></textarea>
+          </div>
         </div>
         <!-- Modal footer -->
         <div class="modal-footer">
