@@ -46,8 +46,22 @@ if(isset($_POST['submits']))
   
 }
 
+if (isset($_POST['update'])) 
+{ 
+  
+  $updateid = ($_POST['updateid']);
+  $notesname = ($_POST['notesname']);
+  $notescontent = ($_POST['notescontent']);
+  $folderid=($_GET['folderid']);
 
-
+  $sql = "UPDATE notes SET notesname=:notesname, notescontent=:notescontent WHERE notesid=:updateid";
+  $query = $dbh->prepare($sql);
+  $query->bindParam(':notesname', $notesname, PDO::PARAM_STR);
+  $query->bindParam(':notescontent', $notescontent, PDO::PARAM_STR);
+  $query->bindParam(':updateid',$updateid,PDO::PARAM_STR);
+  $query->execute();
+  header("Location: index.php?folderid=$folderid");
+}
 
     
 ?>
@@ -443,7 +457,6 @@ if(isset($_POST['submits']))
           <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
           <button type="submit" class="btn btn-primary" name="submits">Add</button>
         </div>
-        
       </div>
     </div>
   </div>

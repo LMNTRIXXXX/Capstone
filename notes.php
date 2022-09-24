@@ -1,6 +1,4 @@
 
-						
-						
 <div class="modal fade" id="myModal1<?php echo htmlentities($result->notesid); ?>">
     <div class="modal-dialog modal-lg">
       <div class="modal-content">
@@ -25,19 +23,18 @@
         nicEditors.allTextAreas() });
   </script>
   
-  <textarea name="area3" id="nota" style="width: 765px; height: 200px; padding: 20px;"> <?php echo htmlentities($result->notescontent); ?>
+  <textarea name="notescontent" style="width: 765px; height: 200px; padding: 20px;"> <?php echo htmlentities($result->notescontent); ?>
 </textarea>
 </div>
+<input type="hidden" name="updateid" value="<?php echo htmlentities($result->notesid); ?>">
 
-
-          
         </div>
-        
+
         <!-- Modal footer -->
         <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button type="submit" class="btn btn-primary" name="submits">Edit</button>
+        <button type="submit" class="btn btn-primary" name="update">Edit</button>
         </div>
-        
+        </form>
     </div>
     </div>
