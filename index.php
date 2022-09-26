@@ -94,11 +94,10 @@ if(isset($_POST['share']))
 if(isset($_POST['unshare']))
 { 
   
-  $shareduserid = ($_POST['sharedid']);
-
-  $sql = "DELETE FROM sharednotes WHERE shareduserid=:shareduserid";
+  $deleteid = ($_POST['deleteid']);
+  $sql = "DELETE FROM sharednotes WHERE shareid=:deleteid";
   $query = $dbh->prepare($sql);
-  $query->bindParam(':shareduserid', $shareduserid, PDO::PARAM_STR);
+  $query->bindParam(':deleteid', $deleteid, PDO::PARAM_STR);
   $query->execute();
   header("Location: index.php?folderid=$folderid");
   

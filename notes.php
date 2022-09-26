@@ -79,10 +79,15 @@
           $query->execute();
           $results=$query->fetch(PDO::FETCH_ASSOC);
           if($query->rowCount()>0){
+            $shareid = $results['shareid'];
+          {
           ?>
+          <input type="hidden" name="deleteid" value="<?php echo $shareid ?>">
           <button type="submit" class="btn btn-secondary" name="unshare">Unshare</button>
+        
           <?php 
           }
+        }
           else { ?>
             <button type="submit" class="btn btn-success" name="share">Share</button>
           <?php } ?>
