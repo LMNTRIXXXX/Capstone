@@ -63,6 +63,18 @@ if (isset($_POST['update']))
   header("Location: index.php?folderid=$folderid");
 }
 
+if (isset($_POST['delete'])) 
+{ 
+  
+  $notesid = ($_POST['notesid']);
+
+  $sql = "DELETE FROM notes WHERE notesid=:notesid";
+  $query = $dbh->prepare($sql);
+  $query->bindParam(':notesid', $notesid, PDO::PARAM_STR);
+  $query->execute();
+  header("Location: index.php?folderid=$folderid");
+}
+
     
 ?>
 
@@ -333,13 +345,12 @@ if (isset($_POST['update']))
               <div class="aligns">
                 <h1>NOTES</h1>  
                 <div class="btnss">
-                <button style="background-color:gray" name="submit" data-toggle="modal" data-toggle="modal" data-target="#myModal"><i class="fa-solid fa-plus" ></i></button>
-                <button style="background-color:gray"><i class="fa-sharp fa-solid fa-pen-to-square"></i></button>
-                <button style="background-color:gray"><i class="fa-solid fa-trash"></i></button>
-                  
+                <?php if($folderid != null) {?>
+                <button style="background-color:gray" name="submit"data-toggle="modal" data-toggle="modal" data-target="#myModal"><i class="fa-solid fa-plus" ></i></button>
+                <?php } ?>
                   </div>
               </div>
-
+              <div class="note-items">
               <?php
               if($folderid == null){
               ?>
@@ -360,13 +371,29 @@ if (isset($_POST['update']))
                 foreach ($results as $result)
                 {
               ?>
-              <button class="notesbutton" type="button" data-toggle="modal" data-target="#myModal1<?php echo htmlentities($result->notesid); ?>"><i class="fa-solid fa-folder"  style="margin-right:10px; "></i> <?php echo htmlentities($result->notesname); ?>
+              <form class="note-card" method="post">
+              <div class="note-header">
+                <div class="title">
+                <h1><?php echo htmlentities($result->notesname)?></h1>
+                </div>  
+                <div class="buttons">
+                <a data-toggle="modal" href="#myModal1<?php echo htmlentities($result->notesid); ?>"><i class="fa-solid fa-pen-to-square"></i></a>
+                <button onclick="return confirm('Delete ?')" class="deletebutton" type="submit" name="delete"><i class="fa-solid fa-trash"></i></button>
+                </div>
+              </div>
               
-            </button>
+              <div class="note-card-content">
+              <p><?php echo htmlentities($result->notescontent)?></p>
+              <input type="hidden" name="notesid" value="<?php echo htmlentities($result->notesid)?>">
+              </div>
+                </form>
               <br>
                 
-               <?php include('notes.php'); ?> 
-  </div>
+              <?php 
+              include('notes.php'); 
+              ?> 
+          </div>
+          
 
               <?php
                 }
@@ -381,7 +408,7 @@ if (isset($_POST['update']))
                   </div>
               </div>
           </div><!-- /.col -->
-        
+          </div>
         </div><!-- /.row -->
       </div><!-- /.container-fluid -->
     </div>
