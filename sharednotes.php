@@ -8,101 +8,6 @@ if(!isset($_SESSION['userid'])){
   header("Location: login.php");
 }
 
-if(!isset($_GET['folderid'])){
-  $folderid=null;
-}
-else{
-  $folderid=($_GET['folderid']);
-}
-
-if(isset($_POST['submit'])) 
-{
-    $id = $_SESSION['userid'];
-    $foldername =($_POST['foldername']);
-
-    $sql = "INSERT INTO folder(userid, foldername)VALUES($id, :foldername)";
-    $query = $dbh->prepare($sql);
-    $query->bindParam(':foldername', $foldername, PDO::PARAM_STR);
-    $query->execute();
-    header("Location: index.php");
-}
-
-if(isset($_POST['submits']))
-{ 
-  
-
-  $folderid=($_GET['folderid']);
-  $id = $_SESSION['userid'];
-  $notesname = ($_POST['notesname']);
-  $notescontent = ($_POST['notescontent']);
-  $date = date('Y-m-d H:i:s');
-
-  $sql = "INSERT INTO notes(folderid, userid, notesname, notescontent, date)VALUES($folderid, $id, :notesname, :notescontent, NOW())";
-  $query = $dbh->prepare($sql);
-  $query->bindParam(':notesname', $notesname, PDO::PARAM_STR);
-  $query->bindParam(':notescontent', $notescontent, PDO::PARAM_STR);
-  $query->execute();
-  header("Location: index.php");
-  
-}
-
-if (isset($_POST['update'])) 
-{ 
-  
-  $updateid = ($_POST['updateid']);
-  $notesname = ($_POST['notesname']);
-  $notescontent = ($_POST['notescontent']);
-  $folderid=($_GET['folderid']);
-
-  $sql = "UPDATE notes SET notesname=:notesname, notescontent=:notescontent WHERE notesid=:updateid";
-  $query = $dbh->prepare($sql);
-  $query->bindParam(':notesname', $notesname, PDO::PARAM_STR);
-  $query->bindParam(':notescontent', $notescontent, PDO::PARAM_STR);
-  $query->bindParam(':updateid',$updateid,PDO::PARAM_STR);
-  $query->execute();
-  header("Location: index.php?folderid=$folderid");
-}
-
-if (isset($_POST['delete'])) 
-{ 
-  
-  $notesid = ($_POST['notesid']);
-
-  $sql = "DELETE FROM notes WHERE notesid=:notesid";
-  $query = $dbh->prepare($sql);
-  $query->bindParam(':notesid', $notesid, PDO::PARAM_STR);
-  $query->execute();
-  header("Location: index.php?folderid=$folderid");
-}
-
-if(isset($_POST['share']))
-{ 
-  
-  $id = $_SESSION['userid'];
-  $notesid = ($_POST['notesid']);
-  $shareduserid = ($_POST['sharedid']);
-
-  $sql = "INSERT INTO sharednotes(ownerid, notesid, shareduserid, date)VALUES($id, :notesid, :shareduserid, NOW())";
-  $query = $dbh->prepare($sql);
-  $query->bindParam(':notesid', $notesid, PDO::PARAM_STR);
-  $query->bindParam(':shareduserid', $shareduserid, PDO::PARAM_STR);
-  $query->execute();
-  header("Location: index.php?folderid=$folderid");
-  
-}
-
-if(isset($_POST['unshare']))
-{ 
-  
-  $shareduserid = ($_POST['sharedid']);
-
-  $sql = "DELETE FROM sharednotes WHERE shareduserid=:shareduserid";
-  $query = $dbh->prepare($sql);
-  $query->bindParam(':shareduserid', $shareduserid, PDO::PARAM_STR);
-  $query->execute();
-  header("Location: index.php?folderid=$folderid");
-  
-}
 
 
 ?>
@@ -323,7 +228,7 @@ if(isset($_POST['unshare']))
             
               
               <li class="nav-item">
-                <a href="./index.php" class="nav-link active">
+                <a href="./index.php">
                   <p>NOTES</p>
                 </a>
               </li>
@@ -333,7 +238,7 @@ if(isset($_POST['unshare']))
                 </a>
               </li>
               <li class="nav-item">
-                <a href="./sharednotes.php">
+                <a href="#" class="nav-link active">
                   <p>SHARED NOTES</p>
                 </a>
               </li>
@@ -352,59 +257,25 @@ if(isset($_POST['unshare']))
         <div class="row mb-2">
           <div class="col-sm-6">
             <div class="align-folder">
-              <div class="folder">
-                <div class="align"><h1>Folders</h1> <button style="background-color:gray" data-toggle="modal" data-target="#exampleModalCenter"><i class="fa-solid fa-plus" ></i></button></div>
-                <div class="folders">
-                  <?php
-                  $sql = "SELECT * FROM folder WHERE userid=$id";
-                  $query=$dbh->prepare($sql);
-                  $query->execute();
-                  $results=$query->fetchALL(PDO::FETCH_OBJ);
+              <div class="notess" style="width:100%;">
+              <div class="alignss">
+                <h1>SHARED NOTES</h1>
 
-                  $cnt=1;
-                  if ($query->rowCount()>0) {
-                  # code...
-                  foreach ($results as $result) 
-                  {
-                  ?>
-                  <a href="index.php?folderid=<?php echo htmlentities($result->folderid)?>"><button class="folderbutton" type="button"><i class="fa-solid fa-folder"  style="margin-right:10px; "></i> <?php echo htmlentities($result->foldername);?></button></a>
-                  
-                  <?php
-                  }
-                }
-                  ?>
-                </div>
-              </div>
-              <div class="notess">
-              <div class="aligns">
-                <h1>NOTES</h1>  
-                <div class="btnss">
-                <?php if($folderid != null) {?>
-                <button style="background-color:gray" name="submit"data-toggle="modal" data-toggle="modal" data-target="#myModal"><i class="fa-solid fa-plus" ></i></button>
-                <?php } ?>
-                  </div>
-              </div>
-              <div class="note-items">
+              <div class="cards-container">
               <?php
-              if($folderid == null){
-              ?>
-              <div class="warning"> <i class="fa-solid fa-face-sad-tear"></i> Select Folder <i class="fa-solid fa-face-smile"></i></div>
-              <?php
-              }
-              else{
-                
-                $sql = "SELECT * FROM notes
-                INNER JOIN folder ON notes.folderid = folder.folderid
-                WHERE notes.folderid=$folderid";
-                $query=$dbh->prepare($sql);
-                $query->execute();
-                $results=$query->fetchALL(PDO::FETCH_OBJ);
-
-                $cnt=1;
-                if ($query->rowCount()>0) {
-                foreach ($results as $result)
+              $id = $_SESSION['userid'];
+              $sql="SELECT * FROM sharednotes
+              INNER JOIN notes ON sharednotes.notesid = notes.notesid
+              WHERE sharednotes.shareduserid = $id";
+              $query=$dbh->prepare($sql);
+              $query->execute();
+              $results=$query->fetchALL(PDO::FETCH_OBJ);
+    
+              $cnt=1;
+              if ($query->rowCount()>0) {
+                # code...
+                foreach ($results as $result) 
                 {
-                  $notesid = $result->notesid;
               ?>
               <form class="note-card" method="post">
               <div class="note-header">
@@ -412,8 +283,7 @@ if(isset($_POST['unshare']))
                 <h1><?php echo htmlentities($result->notesname)?></h1>
                 </div>  
                 <div class="buttons">
-                <a data-toggle="modal" href="#myModal1<?php echo htmlentities($result->notesid); ?>"><i class="fa-solid fa-pen-to-square"></i></a>
-                <button onclick="return confirm('Delete ?')" class="deletebutton" type="submit" name="delete"><i class="fa-solid fa-trash"></i></button>
+                <a data-toggle="modal" href="#"><i class="fa-solid fa-pen-to-square"></i></a>
                 </div>
               </div>
               
@@ -422,25 +292,13 @@ if(isset($_POST['unshare']))
               <input type="hidden" name="notesid" value="<?php echo htmlentities($result->notesid)?>">
               </div>
                 </form>
-              <br>
-                
-              <?php 
-              include('notes.php'); 
-              ?> 
-          </div>
-          
-
-              <?php
+                <?php 
                 }
               }
-              else{            
-              ?>
-              <div class="warning"> <i class="fa-solid fa-face-sad-tear"></i> No Notes Found! Make some <i class="fa-solid fa-face-smile"></i></div>
-              <?php
-              }
-              }
-              ?>
-                  </div>
+                ?>
+                
+              </div>
+
               </div>
           </div><!-- /.col -->
           </div>

@@ -48,36 +48,53 @@
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title" style="color: #FFFFFF" id="exampleModalLongTitle">Share Note</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"> 
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
       <div class="modal-body">
       <div class="user-container">
+        
+
         <?php
-        $id = $_SESSION['userid'];
+                        $id = $_SESSION['userid'];
                         $sql = "SELECT * FROM user
                         WHERE userid != $id && usertype = 'user'";
                         $query=$dbh->prepare($sql);
                         $query->execute();
                         $results=$query->fetchALL(PDO::FETCH_OBJ);
-        
-                        $cnt=1;
-                        if ($query->rowCount()>0) {
-                        foreach ($results as $result)
+                        foreach ($results as $result1)
                         {
+                      $shareduserid = $result1->userid;
         ?>
+        <form method="post">
+        <input type="hidden" name="notesid" value="<?php echo htmlentities($result->notesid); ?>">
         <div class="user-items">
-          <h4>  <?php echo htmlentities($result->firstname); ?>  <?php echo htmlentities($result->lastname); ?> </h4>
-          <button type="submit" class="btn btn-primary" name="update">Share</button>
+          <h4>  <?php echo htmlentities($result1->firstname); ?>  <?php echo htmlentities($result1->lastname); ?> </h4>
+          <input type="hidden" name="sharedid" value="<?php echo htmlentities($result1->userid); ?>">
+          <?php
+          $sql = "SELECT * FROM sharednotes
+          WHERE shareduserid = $shareduserid && notesid = $notesid ";
+          $query = $dbh->prepare($sql);
+          $query->execute();
+          $results=$query->fetch(PDO::FETCH_ASSOC);
+          if($query->rowCount()>0){
+          ?>
+          <button type="submit" class="btn btn-secondary" name="unshare">Unshare</button>
+          <?php 
+          }
+          else { ?>
+            <button type="submit" class="btn btn-success" name="share">Share</button>
+          <?php } ?>
         </div>
-        
+        </form>
         <?php
-              }
           }
         ?>
-
+          
       </div>
+      
+      
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
