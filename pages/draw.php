@@ -1,5 +1,5 @@
 <?php
-include 'C:\xampp\htdocs\AdminLTE-3.2.0\config.php';
+include 'D:\PROGRAMMING SOFTWARES\XAMPP\htdocs\Capstone\config.php';
 session_start();
 
 
@@ -24,7 +24,7 @@ if(!isset($_SESSION['userid'])){
 
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
-  <link rel="stylesheet" type="text/css" href="draw.css">
+  <link rel="stylesheet" type="text/css" href="css/draw.css">
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
 <script src="https://use.fontawesome.com/46af14eb3c.js"></script>
   <!-- Google Font: Source Sans Pro -->
@@ -193,15 +193,15 @@ if(!isset($_SESSION['userid'])){
           <label class="title" style="color:black">Shapes</label>
           <ul class="options" style="padding-top:20px; margin-left:-40px;">
             <li class="option tool" id="rectangle">
-              <img src="icons/rectangle.svg" alt="">
+              <img src="../icons/rectangle.svg" alt="">
               <span>Rectangle</span>
             </li>
             <li class="option tool" id="circle">
-              <img src="icons/circle.svg" alt="">
+              <img src="../icons/circle.svg" alt="">
               <span>Circle</span>
             </li>
             <li class="option tool" id="triangle">
-              <img src="icons/triangle.svg" alt="">
+              <img src="../icons/triangle.svg" alt="">
               <span>Triangle</span>
             </li>
             <li class="option">
@@ -270,7 +270,7 @@ if(!isset($_SESSION['userid'])){
 </div>
 <!-- ./wrapper -->
 
-<script src="draw.js"></script>
+<script src="js/draw.js"></script>
 </script>
 <!-- REQUIRED SCRIPTS -->
 <!-- jQuery -->

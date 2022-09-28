@@ -1,5 +1,5 @@
 <?php
-include 'C:\xampp\htdocs\AdminLTE-3.2.0\config.php';;
+include 'D:\PROGRAMMING SOFTWARES\XAMPP\htdocs\Capstone\config.php';
 session_start();
 
 
@@ -121,7 +121,7 @@ if(isset($_POST['unshare']))
 
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
-  <link rel="stylesheet" type="text/css" href="style2.css">
+  <link rel="stylesheet" type="text/css" href="css/style2.css">
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
 
   <!-- Google Font: Source Sans Pro -->
@@ -441,9 +441,15 @@ if(isset($_POST['unshare']))
         <input type="text" class="form-control" placeholder="Notes Name" name="notesname" required style="color:black; background-color:white;">
           <br>
           <div style="background-color: #FFFFFF; color:black;">
+          <script type="text/javascript" src="//js.nicedit.com/nicEdit-latest.js"></script> 
+          <script type="text/javascript">
+        bkLib.onDomLoaded(function() {
+        nicEditors.allTextAreas() });
+        </script>
           <textarea name="notescontent" style="width: 765px; height: 200px; padding: 20px;"></textarea>
           </div>
-          <input type="date" class="form-control" placeholder="date" name="reminddate" required style="color:black; background-color:white; margin-top:5px;">
+          <span style="color:white;">Remind Date:</span>
+          <input type="date" class="form-control" placeholder="date" name="reminddate" style="color:black; background-color:white; margin-top:5px;">
         </div>
         <!-- Modal footer -->
         <div class="modal-footer">

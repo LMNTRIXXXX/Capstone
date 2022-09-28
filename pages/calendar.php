@@ -1,5 +1,5 @@
 <?php
-include 'C:\xampp\htdocs\AdminLTE-3.2.0\config.php';
+include 'D:\PROGRAMMING SOFTWARES\XAMPP\htdocs\Capstone\config.php';
 session_start();
 $id = $_SESSION['userid'];
 
@@ -22,10 +22,12 @@ if(!isset($_SESSION['userid'])){
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
 <!-- Font Awesome Icons -->
 <link rel="stylesheet" href="../plugins/fontawesome-free/css/all.min.css">
+<link rel="stylesheet" type="text/css" href="css/calendar.css">
 <!-- overlayScrollbars -->
 <link rel="stylesheet" href="../plugins/overlayScrollbars/css/OverlayScrollbars.min.css">
 <!-- Theme style -->
 <link rel="stylesheet" href="../dist/css/adminlte.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.10.2/fullcalendar.min.css" integrity="sha512-KXkS7cFeWpYwcoXxyfOumLyRGXMp7BTMTjwrgjMg0+hls4thG2JGzRgQtRfnAuKTn2KWTDZX4UdPg+xTs8k80Q==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
 <body class="hold-transition dark-mode sidebar-mini layout-fixed layout-navbar-fixed layout-footer-fixed">
 <div class="wrapper">
@@ -175,9 +177,9 @@ if(!isset($_SESSION['userid'])){
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-          
+            <div id="calendar" style="background:white; color:black; width:950px; border-radius:7px; margin-left:50px;"></div>
+          </div>
           </div><!-- /.col -->
-        
         </div><!-- /.row -->
       </div><!-- /.container-fluid -->
     </div>
@@ -222,5 +224,37 @@ if(!isset($_SESSION['userid'])){
 
 <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
 <script src="../dist/js/pages/dashboard2.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+  <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.4.0/fullcalendar.min.js"></script>
+
+  <?php
+      
+      $sql="SELECT * FROM notes WHERE userid = $id";
+       $query=$dbh->prepare($sql);
+       $query->execute();
+?>
+  <script>
+    $(document).ready(function() {
+     var calendar = $('#calendar').fullCalendar({
+      editable:false,
+      header:{
+       left:'prev,next today',
+       center:'title',
+       right:'month,agendaWeek,agendaDay'
+      },
+      events: [<?php $results=$query->fetchALL(PDO::FETCH_OBJ);
+                 foreach ($results as $result) 
+                 { ?>{ id : '<?php echo htmlentities($result->notesid);?>', 
+                       title : ' <?php echo htmlentities($result->notesname);?>', 
+                       start : '<?php echo htmlentities($result->reminddate);?>', }, <?php 
+                } ?>],
+      selectable:true,
+      selectHelper:true,
+    });
+  });
+</script>
 </body>
 </html>

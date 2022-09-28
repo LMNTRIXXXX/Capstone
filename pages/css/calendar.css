@@ -1,0 +1,10 @@
+.fc-content:hover{
+    color: white;
+}
+.fc-content
+{
+    height: 30px;
+    display: flex;
+    align-items: center;    
+    justify-content: center;
+}
