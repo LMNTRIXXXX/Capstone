@@ -150,3 +150,32 @@
     max-height: 70vh;
     overflow: auto;
 }
+
+.profile{
+    border:1px solid black;
+    height:575px;
+    width:960px;
+    margin:1px;
+}
+
+.firstdiv{
+    border:1px solid black;
+    height:250px;
+    width:955px;
+    margin:1px;
+    display:flex;
+}
+
+.pic{
+    border:1px solid black;
+    height:240px;
+    width:360px;
+    margin:1px;
+}
+
+.emailpass{
+    border:1px solid black;
+    height:240px;
+    width:600px;
+    margin:1px;
+}
