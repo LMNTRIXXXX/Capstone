@@ -1,5 +1,5 @@
 <?php
-include 'D:\PROGRAMMING SOFTWARES\XAMPP\htdocs\Capstone\config.php';
+include 'C:\xampp\htdocs\AdminLTE-3.2.0\config.php';
 session_start();
 
 
@@ -136,7 +136,7 @@ if (isset($_POST['update']))
             foreach ($results as $result) 
             {
           ?>
-          <a href="#" class="d-block"> <?php echo htmlentities($result->firstname);?> <?php echo htmlentities($result->lastname); ?></a>
+          <a href="profile.php" class="d-block"> <?php echo htmlentities($result->firstname);?> <?php echo htmlentities($result->lastname); ?></a>
           <?php } 
                     } ?>
         </div>

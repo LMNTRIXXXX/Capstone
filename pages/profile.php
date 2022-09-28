@@ -1,5 +1,5 @@
 <?php
-include 'D:\PROGRAMMING SOFTWARES\XAMPP\htdocs\Capstone\config.php';
+include 'C:\xampp\htdocs\AdminLTE-3.2.0\config.php';
 session_start();
 $id = $_SESSION['userid'];
 
@@ -21,11 +21,11 @@ if(!isset($_SESSION['userid'])){
 <!-- Google Font: Source Sans Pro -->
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
 <!-- Font Awesome Icons -->
-<link rel="stylesheet" href="plugins/fontawesome-free/css/all.min.css">
+<link rel="stylesheet" href="../plugins/fontawesome-free/css/all.min.css">
 <!-- overlayScrollbars -->
-<link rel="stylesheet" href="plugins/overlayScrollbars/css/OverlayScrollbars.min.css">
+<link rel="stylesheet" href="../plugins/overlayScrollbars/css/OverlayScrollbars.min.css">
 <!-- Theme style -->
-<link rel="stylesheet" href="dist/css/adminlte.min.css">
+<link rel="stylesheet" href="../dist/css/adminlte.min.css">
 </head>
 <body class="hold-transition dark-mode sidebar-mini layout-fixed layout-navbar-fixed layout-footer-fixed">
 <div class="wrapper">
@@ -85,7 +85,7 @@ if(!isset($_SESSION['userid'])){
   <aside class="main-sidebar sidebar-dark-primary elevation-4">
     <!-- Brand Logo -->
     <a href="index.php" class="brand-link">
-      <img src="dist/img/AdminLTELogo.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
+      <img src="../dist/img/AdminLTELogo.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
       <span class="brand-text font-weight-light">OVERFLOW</span>
     </a>
 
@@ -94,7 +94,7 @@ if(!isset($_SESSION['userid'])){
       <!-- Sidebar user panel (optional) -->
       <div class="user-panel mt-3 pb-3 mb-3 d-flex">
         <div class="image">
-          <img src="dist/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image">
+          <img src="../dist/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image">
         </div>
         <div class="info">
           <?php
@@ -127,14 +127,31 @@ if(!isset($_SESSION['userid'])){
             
             
               
-              <li class="nav-item">
-                <a href="./index.php">
+          <li class="nav-item">
+              <a href="./index.php" class="nav-link">
+              <i class="nav-icon fas fa-sticky-note"></i>
                   <p>NOTES</p>
                 </a>
               </li>
+
               <li class="nav-item">
-                <a href="./journal.php" class="nav-link active">
+              <a href="./journal.php" class="nav-link">
+              <i class="nav-icon fas fa-book"></i>
                   <p>JOURNAL</p>
+                </a>
+              </li>
+
+              <li class="nav-item">
+              <a href="./sharednotes.php" class="nav-link">
+              <i class="nav-icon far fa-sticky-note"></i>
+                  <p>SHARED NOTES</p>
+                </a>
+              </li>
+
+              <li class="nav-item">
+              <a href="./draw.php" class="nav-link">
+              <i class="nav-icon fas fa-pencil-ruler"></i>
+                  <p>DRAW</p>
                 </a>
               </li>
               
@@ -188,25 +205,25 @@ if(!isset($_SESSION['userid'])){
 
 
 <!-- jQuery -->
-<script src="plugins/jquery/jquery.min.js"></script>
+<script src="../plugins/jquery/jquery.min.js"></script>
 <!-- Bootstrap -->
-<script src="plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+<script src="../plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
 <!-- overlayScrollbars -->
-<script src="plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js"></script>
+<script src="../plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js"></script>
 <!-- AdminLTE App -->
-<script src="dist/js/adminlte.js"></script>
+<script src="../dist/js/adminlte.js"></script>
 
 <!-- PAGE PLUGINS -->
 <!-- jQuery Mapael -->
-<script src="plugins/jquery-mousewheel/jquery.mousewheel.js"></script>
-<script src="plugins/raphael/raphael.min.js"></script>
-<script src="plugins/jquery-mapael/jquery.mapael.min.js"></script>
-<script src="plugins/jquery-mapael/maps/usa_states.min.js"></script>
+<script src="../plugins/jquery-mousewheel/jquery.mousewheel.js"></script>
+<script src="../plugins/raphael/raphael.min.js"></script>
+<script src="../plugins/jquery-mapael/jquery.mapael.min.js"></script>
+<script src="../plugins/jquery-mapael/maps/usa_states.min.js"></script>
 <!-- ChartJS -->
-<script src="plugins/chart.js/Chart.min.js"></script>
+<script src="../plugins/chart.js/Chart.min.js"></script>
 
 
 <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
-<script src="dist/js/pages/dashboard2.js"></script>
+<script src="../dist/js/pages/dashboard2.js"></script>
 </body>
 </html>
