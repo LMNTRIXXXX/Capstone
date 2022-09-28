@@ -154,6 +154,13 @@ if(!isset($_SESSION['userid'])){
                   <p>DRAW</p>
                 </a>
               </li>
+
+              <li class="nav-item">
+              <a href="./calendar.php" class="nav-link">
+              <i class="nav-icon fas fa-calendar"></i>
+                  <p>CALENDAR</p>
+                </a>
+              </li>
               
       </nav>
       <!-- /.sidebar-menu -->

@@ -36,11 +36,13 @@ if(isset($_POST['submits']))
   $notesname = ($_POST['notesname']);
   $notescontent = ($_POST['notescontent']);
   $date = date('Y-m-d H:i:s');
+  $reminddate = ($_POST['reminddate']);
 
-  $sql = "INSERT INTO notes(folderid, userid, notesname, notescontent, date)VALUES($folderid, $id, :notesname, :notescontent, NOW())";
+  $sql = "INSERT INTO notes(folderid, userid, notesname, notescontent, reminddate, date)VALUES($folderid, $id, :notesname, :notescontent, :reminddate, NOW())";
   $query = $dbh->prepare($sql);
   $query->bindParam(':notesname', $notesname, PDO::PARAM_STR);
   $query->bindParam(':notescontent', $notescontent, PDO::PARAM_STR);
+  $query->bindParam(':reminddate', $reminddate, PDO::PARAM_STR);
   $query->execute();
   header("Location: index.php?folderid=$folderid");
   
@@ -232,7 +234,7 @@ if(isset($_POST['unshare']))
               
          
              <li class="nav-item">
-              <a href="#" class="nav-link active">
+              <a href="./index.php" class="nav-link active">
               <i class="nav-icon fas fa-sticky-note"></i>
                   <p>NOTES</p>
                 </a>
@@ -256,6 +258,13 @@ if(isset($_POST['unshare']))
               <a href="./draw.php" class="nav-link">
               <i class="nav-icon fas fa-pencil-ruler"></i>
                   <p>DRAW</p>
+                </a>
+              </li>
+
+              <li class="nav-item">
+              <a href="./calendar.php" class="nav-link">
+              <i class="nav-icon fas fa-calendar"></i>
+                  <p>CALENDAR</p>
                 </a>
               </li>
               
@@ -434,6 +443,7 @@ if(isset($_POST['unshare']))
           <div style="background-color: #FFFFFF; color:black;">
           <textarea name="notescontent" style="width: 765px; height: 200px; padding: 20px;"></textarea>
           </div>
+          <input type="date" class="form-control" placeholder="date" name="reminddate" required style="color:black; background-color:white; margin-top:5px;">
         </div>
         <!-- Modal footer -->
         <div class="modal-footer">

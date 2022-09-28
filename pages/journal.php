@@ -127,29 +127,38 @@ if(!isset($_SESSION['userid'])){
             
             
               
-              <li class="nav-item">
-              <a href="./index.php" class="nav-link">
-              <i class="nav-icon fas fa-sticky-note "></i>
+          <li class="nav-item">
+              <a href="./index.php" class="nav-link ">
+              <i class="nav-icon fas fa-sticky-note"></i>
                   <p>NOTES</p>
                 </a>
               </li>
-              
+
               <li class="nav-item">
-              <a href="#" class="nav-link active">
+              <a href="./journal.php" class="nav-link active">
               <i class="nav-icon fas fa-book"></i>
                   <p>JOURNAL</p>
                 </a>
               </li>
+
               <li class="nav-item">
               <a href="./sharednotes.php" class="nav-link">
               <i class="nav-icon far fa-sticky-note"></i>
                   <p>SHARED NOTES</p>
                 </a>
               </li>
+
               <li class="nav-item">
               <a href="./draw.php" class="nav-link">
               <i class="nav-icon fas fa-pencil-ruler"></i>
                   <p>DRAW</p>
+                </a>
+              </li>
+
+              <li class="nav-item">
+              <a href="./calendar.php" class="nav-link">
+              <i class="nav-icon fas fa-calendar"></i>
+                  <p>CALENDAR</p>
                 </a>
               </li>
               
