@@ -83,6 +83,36 @@ if(!isset($_SESSION['userid'])){
 
           <?php 
 
+          date_default_timezone_set('Asia/Singapore');
+          function time_elapsed_string($datetime, $full = false) {
+          $now = new DateTime;
+          $ago = new DateTime($datetime);
+          $diff = $now->diff($ago);
+
+          $diff->w = floor($diff->d / 7);
+          $diff->d -= $diff->w * 7;
+  
+          $string = array(
+              'y' => 'year',
+              'm' => 'month',
+              'w' => 'week',
+              'd' => 'day',
+              'h' => 'hour',
+              'i' => 'minute',
+              's' => 'second',
+          );
+          foreach ($string as $k => &$v) {
+              if ($diff->$k) {
+                  $v = $diff->$k . ' ' . $v . ($diff->$k > 1 ? 's' : '');
+              } else {
+                  unset($string[$k]);
+              }
+          }
+
+          if (!$full) $string = array_slice($string, 0, 1);
+          return $string ? implode(', ', $string) . ' ago' : 'just now';
+          }
+    
           $id = $_SESSION['userid'];
           $sql="SELECT * FROM notification WHERE receiverid = $id ORDER BY notifid DESC";
           $query=$dbh->prepare($sql);
@@ -93,13 +123,13 @@ if(!isset($_SESSION['userid'])){
           foreach ($results as $result) 
           {
           ?>
-
+          
           <a href="<?php echo htmlentities($result->header);?>" class="dropdown-item">
             <div class="media">
               <div class="media-body">
 
                 <p class="text-md"><?php echo htmlentities($result->message);?></p>
-                <p class="text-sm text-muted"><i class="far fa-clock mr-1"></i> 4 Hours Ago</p>
+                <p class="text-sm text-muted"><i class="far fa-clock mr-1"></i><?php echo time_elapsed_string(htmlentities($result->date));?></p>
               </div>
             </div>
           </a>
@@ -126,7 +156,6 @@ if(!isset($_SESSION['userid'])){
           <a href="#" class="dropdown-item dropdown-footer">See All Notifications</a>
         </div>
       </li>
-
       
       <li class="nav-item">
     <a href="logout.php"> <button class="material-symbols-outlined" style="padding-top: 6px; background-color:transparent; border:0; color:white;" >logout</button></a>
