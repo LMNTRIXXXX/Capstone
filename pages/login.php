@@ -20,6 +20,8 @@ if(isset($_POST['submit']))
     if($query->rowCount() > 0){
         session_regenerate_id();
         $_SESSION['userid'] = $results['userid'];
+        $_SESSION['lastname'] = $results['lastname'];
+        $_SESSION['firstname'] = $results['firstname'];
         header("Location: index.php");
     }
     else{

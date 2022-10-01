@@ -82,6 +82,60 @@ if(!isset($_SESSION['userid'])){
         </div>
       </li>
 
+        <li class="nav-item dropdown" style="padding-right:20px;">
+        <a class="nav-link" data-toggle="dropdown" href="#">
+          <i class="far fa-bell"></i>
+          <span class="badge badge-danger navbar-badge">3</span>
+        </a>
+        <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right" >
+          <div style="max-height:400px;overflow:auto">
+          <!-- Message Start -->
+
+          <?php 
+
+          $id = $_SESSION['userid'];
+          $sql="SELECT * FROM notification WHERE receiverid = $id ORDER BY notifid DESC";
+          $query=$dbh->prepare($sql);
+          $query->execute();
+          $results=$query->fetchALL(PDO::FETCH_OBJ);
+
+          if ($query->rowCount()>0) {
+          foreach ($results as $result) 
+          {
+          ?>
+
+          <a href="<?php echo htmlentities($result->header);?>" class="dropdown-item">
+            <div class="media">
+              <div class="media-body">
+
+                <p class="text-md"><?php echo htmlentities($result->message);?></p>
+                <p class="text-sm text-muted"><i class="far fa-clock mr-1"></i> 4 Hours Ago</p>
+              </div>
+            </div>
+          </a>
+          <div class="dropdown-divider"></div>
+          <?php
+              }
+          }
+          else {
+          ?>
+            
+            <div class="media" style="height:50px;">
+              <div class="media-body" style="display:flex; justify-content:center; padding-top: 10px;">
+                <p class="text-md" style="text-align:center;">No Notification</p>
+              </div>
+            </div>
+  
+          <div class="dropdown-divider"></div>
+          <?php
+          } 
+          ?>
+          <!-- Message End -->
+
+          </div>
+          <a href="#" class="dropdown-item dropdown-footer">See All Notifications</a>
+        </div>
+      </li>
       
       <li class="nav-item">
     <a href="logout.php"> <button class="material-symbols-outlined" style="padding-top: 6px; background-color:transparent; border:0; color:white;" >logout</button></a>
