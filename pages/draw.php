@@ -82,13 +82,33 @@ if(!isset($_SESSION['userid'])){
         </div>
       </li>
 
+      <form class="readnotifs">
       <li class="nav-item dropdown" style="padding-right:20px;">
-        <a class="nav-link" data-toggle="dropdown" href="#">
-          <i class="far fa-bell"></i>
-          <span class="badge badge-danger navbar-badge">3</span>
+        <a class="nav-link" data-toggle="dropdown" type="submit" href="#">
+          <i class="far fa-bell" id="bell"></i>
+          <?php
+          $id = $_SESSION['userid'];
+          $sql="SELECT COUNT(*) AS total FROM notification where receiverid = $id AND status = 'unread'";
+              $query=$dbh->prepare($sql);
+              $query->execute();
+              $results=$query->fetchALL(PDO::FETCH_OBJ);
+              if ($query->rowCount()>0) {
+                foreach ($results as $result) 
+                {              
+                if($result->total != 0)
+                {
+          ?>
+          <span class="badge badge-danger navbar-badge"><?php echo htmlentities($result->total);?></span>
+          <?php 
+                }
+              }
+              }
+          ?>
         </a>
+        
         <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right" >
           <div style="max-height:400px;overflow:auto">
+          
           <!-- Message Start -->
 
           <?php 
@@ -166,6 +186,7 @@ if(!isset($_SESSION['userid'])){
           <a href="#" class="dropdown-item dropdown-footer">See All Notifications</a>
         </div>
       </li>
+        </form>
       
       <li class="nav-item">
     <a href="logout.php"> <button class="material-symbols-outlined" style="padding-top: 6px; background-color:transparent; border:0; color:white;" >logout</button></a>
@@ -379,5 +400,6 @@ if(!isset($_SESSION['userid'])){
 
 <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
 <script src="../dist/js/pages/dashboard2.js"></script>
+<script src="js/notif.js"></script> 
 </body>
 </html>

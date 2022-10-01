@@ -74,13 +74,33 @@ if(!isset($_SESSION['userid'])){
         </div>
       </li>
 
+      <form class="readnotifs">
       <li class="nav-item dropdown" style="padding-right:20px;">
-        <a class="nav-link" data-toggle="dropdown" href="#">
-          <i class="far fa-bell"></i>
-          <span class="badge badge-danger navbar-badge">3</span>
+        <a class="nav-link" data-toggle="dropdown" type="submit" href="#">
+          <i class="far fa-bell" id="bell"></i>
+          <?php
+          $id = $_SESSION['userid'];
+          $sql="SELECT COUNT(*) AS total FROM notification where receiverid = $id AND status = 'unread'";
+              $query=$dbh->prepare($sql);
+              $query->execute();
+              $results=$query->fetchALL(PDO::FETCH_OBJ);
+              if ($query->rowCount()>0) {
+                foreach ($results as $result) 
+                {              
+                if($result->total != 0)
+                {
+          ?>
+          <span class="badge badge-danger navbar-badge"><?php echo htmlentities($result->total);?></span>
+          <?php 
+                }
+              }
+              }
+          ?>
         </a>
+        
         <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right" >
           <div style="max-height:400px;overflow:auto">
+          
           <!-- Message Start -->
 
           <?php 
@@ -158,6 +178,7 @@ if(!isset($_SESSION['userid'])){
           <a href="#" class="dropdown-item dropdown-footer">See All Notifications</a>
         </div>
       </li>
+        </form>
 
       
       <li class="nav-item">
@@ -333,7 +354,8 @@ if(!isset($_SESSION['userid'])){
       events: [<?php $results=$query->fetchALL(PDO::FETCH_OBJ);
                  foreach ($results as $result) 
                  { ?>{ id : '<?php echo htmlentities($result->notesid);?>', 
-                       title : ' <?php echo htmlentities($result->notesname);?>', 
+                       title : ' <?php echo htmlentities($result->notesname);?>',
+                       url: 'index.php?folderid=<?php echo htmlentities($result->folderid);?>',
                        start : '<?php echo htmlentities($result->reminddate);?>', }, <?php 
                 } ?>],
       selectable:true,
@@ -341,5 +363,6 @@ if(!isset($_SESSION['userid'])){
     });
   });
 </script>
+<script src="js/notif.js"></script> 
 </body>
 </html>
