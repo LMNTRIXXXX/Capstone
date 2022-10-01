@@ -1,5 +1,5 @@
 <?php
-include 'D:\PROGRAMMING SOFTWARES\XAMPP\htdocs\Capstone\config.php';
+include 'C:\xampp\htdocs\AdminLTE-3.2.0\config.php';
 session_start();
 $id = $_SESSION['userid'];
 
@@ -232,7 +232,7 @@ if(!isset($_SESSION['userid'])){
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <div id="calendar" style="background:white; color:black; width:950px; border-radius:7px; margin-left:50px;"></div>
+            <div id="calendar" style="background:white; color:black; width:950px; border-radius:7px; margin-left:5px;"></div>
           </div>
           </div><!-- /.col -->
         </div><!-- /.row -->
