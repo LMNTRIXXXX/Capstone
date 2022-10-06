@@ -2,6 +2,7 @@
 include 'D:\PROGRAMMING SOFTWARES\XAMPP\htdocs\Capstone\config.php';
 session_start();
 
+
 date_default_timezone_set('Asia/Singapore');
 $date = date('Y-m-d H:i:s');
 if (!isset($_SESSION['userid'])) {
@@ -111,7 +112,49 @@ if (isset($_POST['readnotifs'])) {
   $query->execute();
   header("Location: index.php?folderid=$folderid");
 }
+
+if (isset($_POST['time'])) {
+  $id = $_SESSION['userid'];
+  $sql = "SELECT * FROM time WHERE userid = $id";
+  $query = $dbh->prepare($sql);
+  $query->execute();
+  $results = $query->fetchALL(PDO::FETCH_OBJ);
+  if ($query->rowCount() > 0) {
+    foreach ($results as $result) {
+      $updateid = htmlentities($result->timeid);
+      $time = htmlentities($result->totaltime);
+
+      $totaltime = ($_POST['totaltime']);
+      $totaltime1 = strtotime($totaltime);
+      $totaltime2 = date('H:i:s', $totaltime1);
+      $totaltime3 = strtotime($time);
+      $totaltime4 = date('H:i:s', $totaltime3);
+
+
+      $secs = strtotime($totaltime4) - strtotime("00:00:00");
+      $result = date("H:i:s", strtotime($totaltime2) + $secs);
+
+
+
+      $sql1 = "UPDATE time SET totaltime = '$result' WHERE timeid = $updateid";
+      $query1 = $dbh->prepare($sql1);
+      $query1->execute();
+      header("Location: logout.php");
+    }
+  } else {
+    $id = $_SESSION['userid'];
+    $totaltime = ($_POST['totaltime']);
+    $totaltime1 = strtotime($totaltime);
+    $totaltime2 = date('H:i:s', $totaltime1);
+
+    $sql = "INSERT INTO time(userid, totaltime)VALUES($id, '$totaltime2')";
+    $query = $dbh->prepare($sql);
+    $query->execute();
+    header("Location: logout.php");
+  }
+}
 include('notifs.php');
+
 
 ?>
 
@@ -291,7 +334,10 @@ include('notifs.php');
         </form>
 
         <li class="nav-item">
-          <a href="logout.php"> <button class="material-symbols-outlined" style="padding-top: 6px; background-color:transparent; border:0; color:white;">logout</button></a>
+          <form action="" method="post">
+            <input type="hidden" id="demo" name="totaltime">
+            <button class="material-symbols-outlined" type="submit" name="time" style="padding-top: 6px; background-color:transparent; border:0; color:white;">logout</button>
+          </form>
         </li>
 
       </ul>
@@ -418,6 +464,24 @@ include('notifs.php');
                 <div class="notess">
                   <div class="aligns">
                     <h1>NOTES</h1>
+
+
+                    <?php
+                    $id = $_SESSION['userid'];
+                    $sql = "SELECT * FROM user WHERE userid = $id";
+                    $query = $dbh->prepare($sql);
+                    $query->execute();
+                    $results = $query->fetchALL(PDO::FETCH_OBJ);
+                    if ($query->rowCount() > 0) {
+                      foreach ($results as $result) {
+                    ?>
+
+                        <h1 style="display:none;" id="logintime"><?php echo htmlentities($result->logindate) ?></h1>
+
+                    <?php }
+                    }
+                    ?>
+
                     <div class="btnss">
                       <?php if ($folderid != null) { ?>
                         <button style="background-color:gray" name="submit" data-toggle="modal" data-toggle="modal" data-target="#myModal"><i class="fa-solid fa-plus"></i></button>
@@ -433,8 +497,8 @@ include('notifs.php');
                     } else {
 
                       $sql = "SELECT * FROM notes
-                INNER JOIN folder ON notes.folderid = folder.folderid
-                WHERE notes.folderid=$folderid";
+                          INNER JOIN folder ON notes.folderid = folder.folderid
+                          WHERE notes.folderid=$folderid";
                       $query = $dbh->prepare($sql);
                       $query->execute();
                       $results = $query->fetchALL(PDO::FETCH_OBJ);
@@ -450,6 +514,7 @@ include('notifs.php');
                                 <h1><?php echo htmlentities($result->notesname) ?></h1>
                               </div>
                               <div class="buttons">
+                                <a data-toggle="modal" href="#myModal4<?php echo htmlentities($result->notesid); ?>" style="padding-right:7px;"><i class="fas fa-eye"></i></a>
                                 <a data-toggle="modal" href="#myModal1<?php echo htmlentities($result->notesid); ?>"><i class="fa-solid fa-pen-to-square"></i></a>
                                 <button onclick="return confirm('Delete ?')" class="deletebutton" type="submit" name="delete"><i class="fa-solid fa-trash"></i></button>
                               </div>
@@ -460,14 +525,39 @@ include('notifs.php');
                               <input type="hidden" name="notesid" value="<?php echo htmlentities($result->notesid) ?>">
                             </div>
                           </form>
-                          <br>
+
 
                           <?php
                           include('notes.php');
                           ?>
+
                   </div>
 
+                  <section>
+                    <div class="modal fade" id="myModal4<?php echo htmlentities($result->notesid); ?>">
+                      <div class="modal-dialog modal-lg">
+                        <div class="modal-content">
+                          <!-- Modal Header -->
+                          <div class="modal-header">
+                            <h4 class="modal-title" style="color: #FFFFFF"><?php echo htmlentities($result->notesname); ?></h4>
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                          </div>
+                          <!-- Modal body -->
+                          <form method="POST">
+                            <div class="modal-body">
+                              <div id="sample" style="color: white;">
+                                <p style="letter-spacing: 0.8px;font-size:20px;"><?php echo htmlentities($result->notescontent); ?></p>
+                              </div>
+                            </div>
 
+                            <!-- Modal footer -->
+                            <div class="modal-footer">
+                              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            </div>
+                          </form>
+                        </div>
+                      </div>
+                  </section>
                 <?php
                         }
                       } else {
@@ -619,6 +709,31 @@ include('notifs.php');
         });
       }, 200);
     }());
+  </script>
+  <script>
+    // Set the date we're counting down to
+    function timemanagement(logintime) {
+      var countDownDate = new Date(logintime).getTime();
+      // Update the count down every 1 second
+      var x = setInterval(function() {
+        // Get today's date and time
+        var today = new Date();
+        var time = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate() + " " + today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+        var newtime = new Date(time).getTime();
+        // Find the distance between now and the count down date
+        var distance = newtime - countDownDate;
+        // Time calculations for days, hours, minutes and seconds
+        var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+        var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+        // Output the result in an element with id="demo"
+        document.getElementById("demo").value = hours + ":" +
+          minutes + ":" + seconds;
+      }, 1000);
+    }
+    var logintime = document.getElementById("logintime").innerHTML;
+    timemanagement(logintime);
   </script>
 </body>
 

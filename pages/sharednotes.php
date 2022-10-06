@@ -344,11 +344,14 @@ if (isset($_POST['update'])) {
                           include('sharednotesmodal.php');
                           ?>
                     </div>
-                <?php
+                  <?php
                         }
+                      } else {
+                  ?>
+                  <div style="margin-top: 10px;" class="warning"> <i class="fa-solid fa-face-sad-tear"></i> No Shared Notes Found! <i class="fa-solid fa-face-smile"></i></div>
+                <?php
                       }
                 ?>
-
                   </div>
 
                 </div>
