@@ -238,6 +238,13 @@ include('notifs.php');
               </a>
             </li>
 
+            <li class="nav-item">
+              <a href="./filemanager.php" class="nav-link">
+                <i class="nav-icon fas fa-file"></i>
+                <p>FILE MANAGER</p>
+              </a>
+            </li>
+
         </nav>
         <!-- /.sidebar-menu -->
       </div>
