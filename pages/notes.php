@@ -78,7 +78,7 @@
                   <input type="hidden" name="sharedid" value="<?php echo htmlentities($result1->userid); ?>">
                   <?php
                   $sql = "SELECT * FROM sharednotes
-          WHERE shareduserid = $shareduserid && notesid = $notesid ";
+                  WHERE shareduserid = $shareduserid && notesid = $notesid ";
                   $query = $dbh->prepare($sql);
                   $query->execute();
                   $results = $query->fetch(PDO::FETCH_ASSOC);
