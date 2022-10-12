@@ -96,7 +96,20 @@ include('notifs.php');
                 <!-- Sidebar user panel (optional) -->
                 <div class="user-panel mt-3 pb-3 mb-3 d-flex">
                     <div class="image">
-                        <img src="../dist/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image">
+                        <?php
+                        $sql = "SELECT * FROM user WHERE userid = $id";
+                        $query = $dbh->prepare($sql);
+                        $query->execute();
+                        $results = $query->fetchALL(PDO::FETCH_OBJ);
+                        foreach ($results as $result) {
+                            $image = htmlentities($result->image);
+                            if ($image == NULL) {
+                        ?>
+                                <img src="../dist/img/avatar.png" class="img-circle elevation-2" alt="USER IMAGE">
+                            <?php } else { ?>
+                                <img src="userimage/<?php echo htmlentities($result->image) ?>" style="width:33.6px; height:33.6px" class="img-circle elevation-2" alt="USER IMAGE">
+                        <?php }
+                        } ?>
                     </div>
                     <div class="info">
                         <?php
@@ -205,10 +218,15 @@ include('notifs.php');
                                         $results = $query->fetchALL(PDO::FETCH_OBJ);
                                         if ($query->rowCount() > 0) {
                                             foreach ($results as $result) {
+                                                $image = htmlentities($result->image);
+                                                if ($image == NULL) {
 
                                         ?>
-                                                <a href="chat.php?yourid=<?php echo $id ?>&userid=<?php echo htmlentities($result->userid); ?>"><button class="folderbutton" type="button"><img src="../dist/img/avatar.png" style="width:30px; height:30px; border-radius:50%; margin-right:10px;" alt="userimage"> <?php echo htmlentities(ucfirst($result->firstname)); ?> <?php echo htmlentities(ucfirst($result->lastname)); ?> </button></a>
+                                                    <a href="chat.php?yourid=<?php echo $id ?>&userid=<?php echo htmlentities($result->userid); ?>"><button class="folderbutton" type="button"><img src="../dist/img/avatar.png" style="width:30px; height:30px; border-radius:50%; margin-right:10px;" alt="userimage"> <?php echo htmlentities(ucfirst($result->firstname)); ?> <?php echo htmlentities(ucfirst($result->lastname)); ?> </button></a>
+                                                <?php } else { ?>
+                                                    <a href="chat.php?yourid=<?php echo $id ?>&userid=<?php echo htmlentities($result->userid); ?>"><button class="folderbutton" type="button"><img src="userimage/<?php echo htmlentities($result->image) ?>" style="width:30px; height:30px; border-radius:50%; margin-right:10px;" alt="userimage"> <?php echo htmlentities(ucfirst($result->firstname)); ?> <?php echo htmlentities(ucfirst($result->lastname)); ?> </button></a>
                                             <?php }
+                                            }
                                         } else { ?>
                                             <div class="warning" style="font-size: 20px;"></i>
                                                 <p>No contacts</p></i>
@@ -235,10 +253,17 @@ include('notifs.php');
                                                 $query->execute();
                                                 $results = $query->fetchALL(PDO::FETCH_OBJ);
                                                 foreach ($results as $result) {
+                                                    $image = htmlentities($result->image);
+                                                    if ($image == NULL) {
                                                 ?>
-                                                    <img src="../dist/img/avatar.png" alt="">
-                                                    <h3> <?php echo htmlentities(ucfirst($result->firstname)); ?> <?php echo htmlentities(ucfirst($result->lastname)); ?> </h3>
-                                                <?php } ?>
+                                                        <img src="../dist/img/avatar.png" class="img-circle elevation-2" alt="USER IMAGE">
+                                                        <h3> <?php echo htmlentities(ucfirst($result->firstname)); ?> <?php echo htmlentities(ucfirst($result->lastname)); ?> </h3>
+                                                    <?php } else {
+                                                    ?>
+                                                        <img src="userimage/<?php echo htmlentities($result->image) ?>" class="img-circle elevation-2" alt="USER IMAGE">
+                                                        <h3> <?php echo htmlentities(ucfirst($result->firstname)); ?> <?php echo htmlentities(ucfirst($result->lastname)); ?> </h3>
+                                                <?php }
+                                                } ?>
                                             </div>
                                             <div class="chats" id="scroll">
                                                 <?php

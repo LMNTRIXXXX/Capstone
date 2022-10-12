@@ -7,6 +7,20 @@ if (!isset($_SESSION['userid'])) {
   header("Location: login.php");
 }
 
+if (isset($_POST['updateimage'])) {
+
+  $image = $_FILES['image']['name'];
+
+  $target_dir = "userimage/";
+  $target_file = $target_dir . basename($_FILES["image"]["name"]);
+  move_uploaded_file($_FILES['image']['tmp_name'], $target_dir . $image);
+
+  $sql = "UPDATE user SET image=:image WHERE userid = $id";
+  $query = $dbh->prepare($sql);
+  $query->bindParam(':image', $image, PDO::PARAM_STR);
+  $query->execute();
+  header("Location: profile.php");
+}
 ?>
 
 <!DOCTYPE html>
@@ -54,7 +68,20 @@ if (!isset($_SESSION['userid'])) {
         <!-- Sidebar user panel (optional) -->
         <div class="user-panel mt-3 pb-3 mb-3 d-flex">
           <div class="image">
-            <img src="../dist/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image">
+            <?php
+            $sql = "SELECT * FROM user WHERE userid = $id";
+            $query = $dbh->prepare($sql);
+            $query->execute();
+            $results = $query->fetchALL(PDO::FETCH_OBJ);
+            foreach ($results as $result) {
+              $image = htmlentities($result->image);
+              if ($image == NULL) {
+            ?>
+                <img src="../dist/img/avatar.png" class="img-circle elevation-2" alt="USER IMAGE">
+              <?php } else { ?>
+                <img src="userimage/<?php echo htmlentities($result->image) ?>" style="width:33.6px; height:33.6px" class="img-circle elevation-2" alt="USER IMAGE">
+            <?php }
+            } ?>
           </div>
           <div class="info">
             <?php
@@ -150,7 +177,28 @@ if (!isset($_SESSION['userid'])) {
             <div class="col-sm-6">
               <div class="profile">
                 <div class="firstdiv">
-                  <div class="pic"></div>
+                  <div class="pic" style="display:flex; justify-content:center; align-items:center; gap:15px; ">
+                    <?php
+                    $sql = "SELECT * FROM user WHERE userid = $id";
+                    $query = $dbh->prepare($sql);
+                    $query->execute();
+                    $results = $query->fetchALL(PDO::FETCH_OBJ);
+                    foreach ($results as $result) {
+                      $image = htmlentities($result->image);
+                      if ($image == NULL) {
+                    ?>
+
+                        <img src="../dist/img/avatar.png" style="border-radius:50%;" alt="">
+                      <?php } else {
+                      ?>
+                        <img src="userimage/<?php echo htmlentities($result->image) ?>" style="border-radius:50%; height:220px; width:220px;" alt="USER IMAGE">
+                    <?php }
+                    } ?>
+                    <div>
+                      <button data-toggle="modal" data-target="#updateimagemodal" style="background:transparent; color:white; border:none;"><i class="fas fa-edit"></i></button>
+                    </div>
+
+                  </div>
                   <div class="emailpass">
                     <label style="margin:5px;">EMAIL</label>
                     <input readonly type="text" class="form-control" aria-describedby="emailHelp" placeholder="Folder Name" name="foldername" disabled="disabled">
@@ -180,7 +228,30 @@ if (!isset($_SESSION['userid'])) {
 
   </div>
   <!-- ./wrapper -->
+  <div class="modal fade" id="updateimagemodal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLongTitle">Select Image</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <form method="POST" enctype="multipart/form-data">
+            <div class="form-group">
+              <input type="file" class="form-control" name="image" id="exampleInputEmail1" aria-describedby="emailHelp" accept=".jpeg, .jpg, .png">
+            </div>
 
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <button type="submit" class="btn btn-primary" name="updateimage">Update</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
   <!-- REQUIRED SCRIPTS -->
 
 

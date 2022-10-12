@@ -172,7 +172,20 @@ include('notifs.php');
         <!-- Sidebar user panel (optional) -->
         <div class="user-panel mt-3 pb-3 mb-3 d-flex">
           <div class="image">
-            <img src="../dist/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image">
+            <?php
+            $sql = "SELECT * FROM user WHERE userid = $id";
+            $query = $dbh->prepare($sql);
+            $query->execute();
+            $results = $query->fetchALL(PDO::FETCH_OBJ);
+            foreach ($results as $result) {
+              $image = htmlentities($result->image);
+              if ($image == NULL) {
+            ?>
+                <img src="../dist/img/avatar.png" class="img-circle elevation-2" alt="USER IMAGE">
+              <?php } else { ?>
+                <img src="userimage/<?php echo htmlentities($result->image) ?>" style="width:33.6px; height:33.6px" class="img-circle elevation-2" alt="USER IMAGE">
+            <?php }
+            } ?>
           </div>
           <div class="info">
             <?php
