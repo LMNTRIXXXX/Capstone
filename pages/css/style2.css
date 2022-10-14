@@ -150,14 +150,14 @@
 }
 
 .profile{
-    border:1px solid black;
+
     height:575px;
     width:960px;
     margin:1px;
 }
 
 .firstdiv{
-    border:1px solid black;
+    
     height:250px;
     width:955px;
     margin:1px;
@@ -171,10 +171,11 @@
 }
 
 .emailpass{
-    border:1px solid black;
+    padding-top:10px;
     height:240px;
-    width:600px;
+    width:925px;
     margin:1px;
+    padding-left:25px;
 }
 .chat-items{
     height: 540px;
@@ -234,4 +235,12 @@
     padding: 10px 10px;
     height: auto;
     border-radius: 7px;
+}
+.seconddiv{
+    
+    height:500px;
+}
+.notecount{
+    
+    width: 600px;
 }

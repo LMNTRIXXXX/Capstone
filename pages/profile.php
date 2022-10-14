@@ -1,5 +1,5 @@
 <?php
-include 'D:\PROGRAMMING SOFTWARES\XAMPP\htdocs\Capstone\config.php';
+include 'C:\xampp\htdocs\AdminLTE-3.2.0\config.php';
 session_start();
 $id = $_SESSION['userid'];
 
@@ -41,6 +41,7 @@ if (isset($_POST['updateimage'])) {
   <link rel="stylesheet" href="../plugins/overlayScrollbars/css/OverlayScrollbars.min.css">
   <!-- Theme style -->
   <link rel="stylesheet" href="../dist/css/adminlte.min.css">
+  
 </head>
 
 <body class="hold-transition dark-mode sidebar-mini layout-fixed layout-navbar-fixed layout-footer-fixed">
@@ -59,7 +60,7 @@ if (isset($_POST['updateimage'])) {
     <aside class="main-sidebar sidebar-dark-primary elevation-4">
       <!-- Brand Logo -->
       <a href="index.php" class="brand-link">
-        <img src="../dist/img/AdminLTELogo.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
+        <img src="../dist/img/overflowlgoo.jpg" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
         <span class="brand-text font-weight-light">OVERFLOW</span>
       </a>
 
@@ -197,13 +198,36 @@ if (isset($_POST['updateimage'])) {
                     <div>
                       <button data-toggle="modal" data-target="#updateimagemodal" style="background:transparent; color:white; border:none;"><i class="fas fa-edit"></i></button>
                     </div>
-
+                    
                   </div>
-                  <div class="emailpass">
+                  <div class="notecount">
+                    
+                      <label style="padding:7px;">Notes Made</label>
+                      <br>
+                      <label style="padding-left:10px;"> <?php echo htmlentities($result->firstname); ?></label>
+                      <br>
+                      <label style="padding:7px;">Notes Shared</label>
+                      <br>
+                      <label style="padding-left:10px;"> <?php echo htmlentities($result->lastname); ?></label>
+                      <br>
+                      <label style="padding:7px;">Notes Shared</label>
+                      <br>
+                      <label style="padding-left:10px;"> <?php echo htmlentities($result->lastname); ?></label>
+                      
+                      
+                      
+                    </div>
+                </div>
+                <div class="seconddiv">
+                <div class="emailpass">
                     <label style="margin:5px;">EMAIL</label>
-                    <input readonly type="text" class="form-control" aria-describedby="emailHelp" placeholder="Folder Name" name="foldername" disabled="disabled">
+                    <input readonly type="text" class="form-control" aria-describedby="emailHelp" name="foldername" value="<?php echo htmlentities($result->email); ?>" disabled="disabled">
                     <label style="margin:5px;">PASSWORD</label>
-                    <input readonly type="password" class="form-control" aria-describedby="emailHelp" placeholder="Password" name="password" disabled="disabled">
+                    <input readonly type="password" class="form-control" aria-describedby="emailHelp" name="password" value="<?php echo htmlentities($result->password); ?>" disabled="disabled">
+                    <label style="margin:5px;">FIRSTNAME</label>
+                    <input readonly type="text" class="form-control" aria-describedby="emailHelp" name="password" value="<?php echo htmlentities($result->firstname); ?>" disabled="disabled">
+                    <label style="margin:5px;">LASTNAME</label>
+                    <input readonly type="text" class="form-control" aria-describedby="emailHelp" name="password" value="<?php echo htmlentities($result->lastname); ?>" disabled="disabled">
                   </div>
                 </div>
               </div>
