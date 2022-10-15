@@ -1,5 +1,5 @@
 <?php
-include 'C:\xampp\htdocs\AdminLTE-3.2.0\config.php';
+include 'D:\PROGRAMMING SOFTWARES\XAMPP\htdocs\Capstone\config.php';
 session_start();
 
 
@@ -8,7 +8,7 @@ if (!isset($_SESSION['userid'])) {
   header("Location: login.php");
 }
 
-
+include('notifs.php');
 ?>
 
 <!DOCTYPE html>

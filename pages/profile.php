@@ -1,5 +1,5 @@
 <?php
-include 'C:\xampp\htdocs\AdminLTE-3.2.0\config.php';
+include 'D:\PROGRAMMING SOFTWARES\XAMPP\htdocs\Capstone\config.php';
 session_start();
 $id = $_SESSION['userid'];
 
@@ -21,6 +21,7 @@ if (isset($_POST['updateimage'])) {
   $query->execute();
   header("Location: profile.php");
 }
+include('notifs.php');
 ?>
 
 <!DOCTYPE html>
@@ -41,7 +42,7 @@ if (isset($_POST['updateimage'])) {
   <link rel="stylesheet" href="../plugins/overlayScrollbars/css/OverlayScrollbars.min.css">
   <!-- Theme style -->
   <link rel="stylesheet" href="../dist/css/adminlte.min.css">
-  
+
 </head>
 
 <body class="hold-transition dark-mode sidebar-mini layout-fixed layout-navbar-fixed layout-footer-fixed">
@@ -198,38 +199,112 @@ if (isset($_POST['updateimage'])) {
                     <div>
                       <button data-toggle="modal" data-target="#updateimagemodal" style="background:transparent; color:white; border:none;"><i class="fas fa-edit"></i></button>
                     </div>
-                    
+
                   </div>
-                  <div class="notecount">
-                    
-                      <label style="padding:7px;">Notes Made</label>
-                      <br>
-                      <label style="padding-left:10px;"> <?php echo htmlentities($result->firstname); ?></label>
-                      <br>
-                      <label style="padding:7px;">Notes Shared</label>
-                      <br>
-                      <label style="padding-left:10px;"> <?php echo htmlentities($result->lastname); ?></label>
-                      <br>
-                      <label style="padding:7px;">Notes Shared</label>
-                      <br>
-                      <label style="padding-left:10px;"> <?php echo htmlentities($result->lastname); ?></label>
-                      
-                      
-                      
+                  <div class="notecount" style="padding-top:25px;">
+
+                    <div style="display: flex; justify-content:space-between;">
+                      <div style="display: flex;flex-direction:column; ">
+                        <label style="padding:7px;">Notes Made</label>
+                        <?php
+                        $sql = "SELECT COUNT(*) AS total FROM notes where userid = $id";
+                        $query = $dbh->prepare($sql);
+                        $query->execute();
+                        $results = $query->fetchALL(PDO::FETCH_OBJ);
+                        $cnt = 1;
+                        if ($query->rowCount() > 0) {
+                          # code...
+                          foreach ($results as $result) {
+                        ?>
+                            <label style="padding-left:10px;"> <?php echo htmlentities($result->total); ?></label>
+                        <?php }
+                        } ?>
+
+                      </div>
+                      <div style="display: flex;flex-direction:column; ">
+                        <label style="padding:7px;">Notes Shared</label>
+                        <?php
+                        $sql = "SELECT COUNT(DISTINCT notesid) AS total FROM sharednotes where ownerid = $id";
+                        $query = $dbh->prepare($sql);
+                        $query->execute();
+                        $results = $query->fetchALL(PDO::FETCH_OBJ);
+                        $cnt = 1;
+                        if ($query->rowCount() > 0) {
+                          # code...
+                          foreach ($results as $result) {
+                        ?>
+                            <label style="padding-left:10px;"> <?php echo htmlentities($result->total); ?> </label>
+                        <?php }
+                        } ?>
+                      </div>
+
                     </div>
-                </div>
-                <div class="seconddiv">
-                <div class="emailpass">
-                    <label style="margin:5px;">EMAIL</label>
-                    <input readonly type="text" class="form-control" aria-describedby="emailHelp" name="foldername" value="<?php echo htmlentities($result->email); ?>" disabled="disabled">
-                    <label style="margin:5px;">PASSWORD</label>
-                    <input readonly type="password" class="form-control" aria-describedby="emailHelp" name="password" value="<?php echo htmlentities($result->password); ?>" disabled="disabled">
-                    <label style="margin:5px;">FIRSTNAME</label>
-                    <input readonly type="text" class="form-control" aria-describedby="emailHelp" name="password" value="<?php echo htmlentities($result->firstname); ?>" disabled="disabled">
-                    <label style="margin:5px;">LASTNAME</label>
-                    <input readonly type="text" class="form-control" aria-describedby="emailHelp" name="password" value="<?php echo htmlentities($result->lastname); ?>" disabled="disabled">
+
+                    <div style="display: flex;justify-content:space-between">
+                      <div style="display: flex;flex-direction:column; ">
+                        <label style="padding:7px;">Time Spent</label>
+                        <?php
+                        $sql = "SELECT * FROM time where userid = $id";
+                        $query = $dbh->prepare($sql);
+                        $query->execute();
+                        $results = $query->fetchALL(PDO::FETCH_OBJ);
+                        $cnt = 1;
+                        if ($query->rowCount() > 0) {
+                          # code...
+                          foreach ($results as $result) {
+                            $time = htmlentities($result->totaltime);
+                            $time = strtotime($time);
+                        ?>
+                            <label style="padding-left:10px;"> <?php echo date('H', $time) ?> Hours <?php echo date('i', $time) ?> Minutes and <?php echo date('s', $time) ?> Seconds </label>
+                        <?php }
+                        } ?>
+                      </div>
+
+                      <div style="display: flex;flex-direction:column; ">
+                        <label style="padding:7px 25px 7px 7px;">File Stored</label>
+                        <?php
+                        $sql = "SELECT COUNT(*) AS total FROM file where userid = $id";
+                        $query = $dbh->prepare($sql);
+                        $query->execute();
+                        $results = $query->fetchALL(PDO::FETCH_OBJ);
+                        $cnt = 1;
+                        if ($query->rowCount() > 0) {
+                          foreach ($results as $result) {
+                        ?>
+                            <label style="padding-left:10px;"> <?php echo htmlentities($result->total); ?> </label>
+                        <?php }
+                        } ?>
+                      </div>
+
+                    </div>
+
+
+
+
                   </div>
                 </div>
+
+                <div class="seconddiv">
+                  <?php
+                  $sql = "SELECT * FROM user WHERE userid = $id";
+                  $query = $dbh->prepare($sql);
+                  $query->execute();
+                  $results = $query->fetchALL(PDO::FETCH_OBJ);
+                  foreach ($results as $result) {
+                  ?>
+                    <div class="emailpass">
+                      <label style="margin:5px;">EMAIL</label>
+                      <input readonly type="text" class="form-control" aria-describedby="emailHelp" name="foldername" value="<?php echo htmlentities($result->email); ?>" disabled="disabled">
+                      <label style="margin:5px;">PASSWORD</label>
+                      <input readonly type="password" class="form-control" aria-describedby="emailHelp" name="password" value="<?php echo htmlentities($result->password); ?>" disabled="disabled">
+                      <label style="margin:5px;">FIRSTNAME</label>
+                      <input readonly type="text" class="form-control" aria-describedby="emailHelp" name="password" value="<?php echo htmlentities($result->firstname); ?>" disabled="disabled">
+                      <label style="margin:5px;">LASTNAME</label>
+                      <input readonly type="text" class="form-control" aria-describedby="emailHelp" name="password" value="<?php echo htmlentities($result->lastname); ?>" disabled="disabled">
+                    </div>
+                  <?php } ?>
+                </div>
+
               </div>
             </div><!-- /.col -->
 

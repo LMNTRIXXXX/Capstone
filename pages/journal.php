@@ -1,5 +1,5 @@
 <?php
-include 'C:\xampp\htdocs\AdminLTE-3.2.0\config.php';
+include 'D:\PROGRAMMING SOFTWARES\XAMPP\htdocs\Capstone\config.php';
 session_start();
 $id = $_SESSION['userid'];
 
@@ -21,6 +21,7 @@ if (isset($_POST['add_journal'])) {
   $query->execute();
   header("Location: journal.php");
 }
+include('notifs.php');
 ?>
 
 <!DOCTYPE html>

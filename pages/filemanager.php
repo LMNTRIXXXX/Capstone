@@ -1,5 +1,5 @@
 <?php
-include 'C:\xampp\htdocs\AdminLTE-3.2.0\config.php';
+include 'D:\PROGRAMMING SOFTWARES\XAMPP\htdocs\Capstone\config.php';
 session_start();
 
 
@@ -34,6 +34,7 @@ if (isset($_POST['delete_file'])) {
     unlink("../files/" . $filename);
     header("Location: filemanager.php");
 }
+include('notifs.php');
 
 ?>
 
