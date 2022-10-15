@@ -36,11 +36,7 @@ if (isset($_POST['send_message'])) {
     $query->execute();
     header("Location: chat.php?yourid=$senderid&userid=$receiverid");
 }
-
-
 include('notifs.php');
-
-
 ?>
 
 <!DOCTYPE html>
@@ -433,6 +429,7 @@ include('notifs.php');
         }());
     </script>
     <script src="js/timemanagement.js"></script>
+    <script src="js/journalnotif.js"></script>
     <script>
         var scroll = document.getElementById("scroll");
         scroll.scrollTop = scroll.scrollHeight;

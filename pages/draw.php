@@ -282,12 +282,8 @@ include('notifs.php');
   <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
   <script src="../dist/js/pages/dashboard2.js"></script>
   <script src="js/notif.js"></script>
-  <script>
-    var objXMLHttpRequest = new XMLHttpRequest();
-    objXMLHttpRequest.open('GET', 'notifs.php');
-    objXMLHttpRequest.send();
-  </script>
   <script src="js/timemanagement.js"></script>
+  <script src="js/journalnotif.js"></script>
 </body>
 
 </html>

@@ -6,7 +6,6 @@ $id = $_SESSION['userid'];
 if (!isset($_SESSION['userid'])) {
   header("Location: login.php");
 }
-
 include('notifs.php');
 ?>
 
@@ -252,6 +251,7 @@ include('notifs.php');
     objXMLHttpRequest.send();
   </script>
   <script src="js/timemanagement.js"></script>
+  <script src="js/journalnotif.js"></script>
 </body>
 
 </html>

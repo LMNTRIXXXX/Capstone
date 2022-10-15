@@ -25,23 +25,3 @@ foreach ($results as $result) {
     $query->execute();
   }
 }
-
-date_default_timezone_set('Asia/Singapore');
-$currenttime = date("H:i:s");
-$testtime = '00:00:01';
-
-if ($currenttime == '00:00:01') {
-  $sql1 = "SELECT * FROM user";
-  $query1 = $dbh->prepare($sql1);
-  $query1->execute();
-  $results = $query1->fetchALL(PDO::FETCH_OBJ);
-  foreach ($results as $result) {
-
-    $userid = htmlentities($result->userid);
-    $message = "Please do your journal";
-    $header = "journal.php";
-    $sql2 = "INSERT INTO notification(receiverid, message, date, header)VALUES($userid, '$message', NOW(), '$header')";
-    $query2 = $dbh->prepare($sql2);
-    $query2->execute();
-  }
-}

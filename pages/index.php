@@ -115,8 +115,6 @@ if (isset($_POST['readnotifs'])) {
 
 
 include('notifs.php');
-
-
 ?>
 
 <!DOCTYPE html>
@@ -522,23 +520,8 @@ include('notifs.php');
   <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
   <script src="../dist/js/pages/dashboard2.js"></script>
   <script src="js/notif.js"></script>
-
-  <script>
-    // var objXMLHttpRequest = new XMLHttpRequest();
-    // objXMLHttpRequest.open('POST', 'notifs.php');
-    // objXMLHttpRequest.send();
-
-    (function() {
-      setInterval(function() {
-        $.ajax({
-          async: true,
-          type: 'POST',
-          url: 'notifs.php',
-        });
-      }, 200);
-    }());
-  </script>
   <script src="js/timemanagement.js"></script>
+  <script src="js/journalnotif.js"></script>
 </body>
 
 </html>

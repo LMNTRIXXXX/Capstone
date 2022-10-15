@@ -21,7 +21,6 @@ if (isset($_POST['submit'])) {
     $query->execute();
     header("Location: login.php");
 }
-include('notifs.php');
 ?>
 
 <!DOCTYPE html>
