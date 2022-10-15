@@ -10,7 +10,7 @@ if (isset($_POST['submit'])) {
     $firstname = strtoupper($_POST['firstname']);
     $lastname = strtoupper($_POST['lastname']);
     $email = strtolower($_POST['email']);
-    $password = md5($_POST['password']);
+    $password = ($_POST['password']);
 
     $sql = "INSERT INTO user(firstname, lastname, email, password, usertype)VALUES(:firstname, :lastname, :email, :password, 'user')";
     $query = $dbh->prepare($sql);
@@ -41,6 +41,7 @@ if (isset($_POST['submit'])) {
     <div class="container">
 
         <form action="" method="POST" class="login-email">
+            <a href="../index.php"><img src="../dist/img/overflowlgoo.jpg" alt="Logo" style="height:100px;margin-top:-40px;margin-left:120px;"></a>
             <p class="login-text" style="font-size: 2rem; font-weight:800;">Register</p>
             <div class="input-group">
                 <input type="text" placeholder="Firstname" name="firstname" required>

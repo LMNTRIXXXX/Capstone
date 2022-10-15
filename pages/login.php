@@ -8,7 +8,7 @@ if (isset($_SESSION['userid'])) {
 
 if (isset($_POST['submit'])) {
     $email = strtolower($_POST['email']);
-    $password = md5($_POST['password']);
+    $password = $_POST['password'];
 
     $sql = "SELECT * FROM user where email=:email AND password =:password";
     $query = $dbh->prepare($sql);
@@ -19,6 +19,7 @@ if (isset($_POST['submit'])) {
     if ($query->rowCount() > 0) {
 
         $updateid = $results['userid'];
+        $usertype = $results['usertype'];
         date_default_timezone_set('Asia/Singapore');
         $currenttime = date("F j, Y H:i:s");
 
@@ -30,7 +31,11 @@ if (isset($_POST['submit'])) {
         $_SESSION['userid'] = $results['userid'];
         $_SESSION['lastname'] = $results['lastname'];
         $_SESSION['firstname'] = $results['firstname'];
-        header("Location: index.php");
+        if ($usertype == 'user') {
+            header("Location: index.php");
+        } else {
+            header("Location: admin.php");
+        }
     } else {
         echo '<script>alert("Wrong Email or Password")</script>';
     }
@@ -56,6 +61,7 @@ if (isset($_POST['submit'])) {
     <div class="container">
 
         <form action="" method="POST" class="login-email">
+            <a href="../index.php"><img src="../dist/img/overflowlgoo.jpg" alt="Logo" style="height:100px;margin-top:-40px;margin-left:120px;"></a>
             <p class="login-text" style="font-size: 2rem; font-weight:800;">Login</p>
             <div class="input-group">
                 <input type="email" placeholder="Email" name="email" required>

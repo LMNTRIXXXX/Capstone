@@ -285,6 +285,9 @@ include('notifs.php');
                 </div>
 
                 <div class="seconddiv">
+                  <div style="display: flex;justify-content:end;padding-right:40px;">
+                    <button data-toggle="modal" data-target="#updateprofile" style="background:transparent; color:white; border:none;"><i style="font-size:20px;" class="fas fa-edit"></i></button>
+                  </div>
                   <?php
                   $sql = "SELECT * FROM user WHERE userid = $id";
                   $query = $dbh->prepare($sql);
@@ -301,6 +304,35 @@ include('notifs.php');
                       <input readonly type="text" class="form-control" aria-describedby="emailHelp" name="password" value="<?php echo htmlentities($result->firstname); ?>" disabled="disabled">
                       <label style="margin:5px;">LASTNAME</label>
                       <input readonly type="text" class="form-control" aria-describedby="emailHelp" name="password" value="<?php echo htmlentities($result->lastname); ?>" disabled="disabled">
+                    </div>
+
+                    <div class="modal fade" id="updateprofile" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                      <div class="modal-dialog modal-dialog-centered" role="document">
+                        <div class="modal-content">
+                          <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLongTitle">Update Profile</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                              <span aria-hidden="true">&times;</span>
+                            </button>
+                          </div>
+                          <div class="modal-body">
+                            <form method="POST" enctype="multipart/form-data">
+                              <label style="margin:5px;">EMAIL</label>
+                              <input type="text" class="form-control" aria-describedby="emailHelp" name="foldername" value="<?php echo htmlentities($result->email); ?>">
+                              <label style="margin:5px;">PASSWORD</label>
+                              <input type="password" class="form-control" aria-describedby="emailHelp" name="password" value="<?php echo htmlentities($result->password); ?>">
+                              <label style="margin:5px;">FIRSTNAME</label>
+                              <input type="text" class="form-control" aria-describedby="emailHelp" name="password" value="<?php echo htmlentities($result->firstname); ?>">
+                              <label style="margin:5px;">LASTNAME</label>
+                              <input type="text" class="form-control" aria-describedby="emailHelp" name="password" value="<?php echo htmlentities($result->lastname); ?>">
+                          </div>
+                          <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-primary" name="updateprofile">Update</button>
+                            </form>
+                          </div>
+                        </div>
+                      </div>
                     </div>
                   <?php } ?>
                 </div>
