@@ -5,7 +5,7 @@
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-  <title>Lumia Bootstrap Template - Index</title>
+  <title>OVERFLOW</title>
   <meta content="" name="description">
   <meta content="" name="keywords">
   <link href="pages/assets/img/favicon.png" rel="icon">
@@ -47,7 +47,7 @@
         <ul>
           <li><a class="nav-link scrollto active" href="#hero">Home</a></li>
           <li><a class="nav-link scrollto" href="#services">Membership</a></li>
-          <li><a href="pages/index.php" class="nav-link scrollto" href="#testimonials">Login</a></li>
+          <li><a href="pages/login.php" class="nav-link scrollto" href="#testimonials">Login</a></li>
 
           <li><a class="nav-link scrollto" href="#contact">Contact</a></li>
         </ul>

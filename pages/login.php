@@ -1,9 +1,14 @@
 <?php
-include 'D:\PROGRAMMING SOFTWARES\XAMPP\htdocs\Capstone\config.php';
+include 'C:\xampp\htdocs\AdminLTE-3.2.0\config.php';
 
 session_start();
 if (isset($_SESSION['userid'])) {
-    header("Location: index.php");
+    if($_GET['usertype']="admin"){
+    header("Location: admin.php");
+    }
+    else{
+        header("Location: index.php");
+    }
 }
 
 if (isset($_POST['submit'])) {

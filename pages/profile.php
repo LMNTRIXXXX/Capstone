@@ -1,5 +1,5 @@
 <?php
-include 'D:\PROGRAMMING SOFTWARES\XAMPP\htdocs\Capstone\config.php';
+include 'C:\xampp\htdocs\AdminLTE-3.2.0\config.php';
 session_start();
 $id = $_SESSION['userid'];
 
@@ -20,6 +20,24 @@ if (isset($_POST['updateimage'])) {
   $query->bindParam(':image', $image, PDO::PARAM_STR);
   $query->execute();
   header("Location: profile.php");
+}
+
+if(isset($_POST['updateprofile']))
+{
+  $email = $_POST['email'];
+  $password = $_POST['password'];
+  $firstname = $_POST['firstname'];
+  $lastname = $_POST['lastname'];
+
+  $sql = "UPDATE user SET email=:email, password=:password, firstname=:firstname, lastname=:lastname WHERE userid=$id";
+  $query = $dbh->prepare($sql);
+  $query->bindParam(':email', $email, PDO::PARAM_STR);
+  $query->bindParam(':password', $password, PDO::PARAM_STR);
+  $query->bindParam(':firstname', $firstname, PDO::PARAM_STR);
+  $query->bindParam(':lastname', $lastname, PDO::PARAM_STR);
+  $query->execute();
+  header("Location: profile.php");
+
 }
 include('notifs.php');
 ?>
@@ -221,7 +239,7 @@ include('notifs.php');
                         } ?>
 
                       </div>
-                      <div style="display: flex;flex-direction:column; ">
+                      <div style="display: flex;flex-direction:column; padding-right:70px;">
                         <label style="padding:7px;">Notes Shared</label>
                         <?php
                         $sql = "SELECT COUNT(DISTINCT notesid) AS total FROM sharednotes where ownerid = $id";
@@ -241,7 +259,7 @@ include('notifs.php');
                     </div>
 
                     <div style="display: flex;justify-content:space-between">
-                      <div style="display: flex;flex-direction:column; ">
+                      <div style="display: flex;flex-direction:column;  ">
                         <label style="padding:7px;">Time Spent</label>
                         <?php
                         $sql = "SELECT * FROM time where userid = $id";
@@ -260,7 +278,7 @@ include('notifs.php');
                         } ?>
                       </div>
 
-                      <div style="display: flex;flex-direction:column; ">
+                      <div style="display: flex;flex-direction:column; padding-right:70px;">
                         <label style="padding:7px 25px 7px 7px;">File Stored</label>
                         <?php
                         $sql = "SELECT COUNT(*) AS total FROM file where userid = $id";
@@ -318,13 +336,13 @@ include('notifs.php');
                           <div class="modal-body">
                             <form method="POST" enctype="multipart/form-data">
                               <label style="margin:5px;">EMAIL</label>
-                              <input type="text" class="form-control" aria-describedby="emailHelp" name="foldername" value="<?php echo htmlentities($result->email); ?>">
+                              <input type="text" class="form-control" aria-describedby="emailHelp" name="email" value="<?php echo htmlentities($result->email); ?>">
                               <label style="margin:5px;">PASSWORD</label>
                               <input type="password" class="form-control" aria-describedby="emailHelp" name="password" value="<?php echo htmlentities($result->password); ?>">
                               <label style="margin:5px;">FIRSTNAME</label>
-                              <input type="text" class="form-control" aria-describedby="emailHelp" name="password" value="<?php echo htmlentities($result->firstname); ?>">
+                              <input type="text" class="form-control" aria-describedby="emailHelp" name="firstname" value="<?php echo htmlentities($result->firstname); ?>">
                               <label style="margin:5px;">LASTNAME</label>
-                              <input type="text" class="form-control" aria-describedby="emailHelp" name="password" value="<?php echo htmlentities($result->lastname); ?>">
+                              <input type="text" class="form-control" aria-describedby="emailHelp" name="lastname" value="<?php echo htmlentities($result->lastname); ?>">
                           </div>
                           <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>

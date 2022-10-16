@@ -117,21 +117,21 @@ if (!isset($_SESSION['userid'])) {
                         </li>
 
                         <li class="nav-item">
-                            <a href="./usernotes.php" class="nav-link active">
+                            <a href="./usernotes.php" class="nav-link">
                                 <i class="nav-icon far fa-sticky-note"></i>
                                 <p>NOTES</p>
                             </a>
                         </li>
 
                         <li class="nav-item">
-                            <a href="./usersharednotes.php" class="nav-link">
+                            <a href="./usersharednotes.php" class="nav-link ">
                                 <i class="nav-icon fas fa-sticky-note"></i>
                                 <p>SHARED NOTES</p>
                             </a>
                         </li>
 
                         <li class="nav-item">
-                            <a href="./userfiles.php" class="nav-link">
+                            <a href="./userfiles.php" class="nav-link active">
                                 <i class="nav-icon fas fa-file"></i>
                                 <p>FILES</p>
                             </a>
@@ -150,7 +150,7 @@ if (!isset($_SESSION['userid'])) {
                 <div class="container-fluid">
                     <div class="row mb-2">
                         <div class="col-sm-6">
-                            <h1>Notes Table</h1>
+                            <h1>Files Table</h1>
                         </div>
                     </div>
                 </div><!-- /.container-fluid -->
@@ -168,37 +168,35 @@ if (!isset($_SESSION['userid'])) {
 
                                         <thead>
                                             <tr>
-                                                <th>Notes ID</th>
-                                                <th>User Name</th>
-                                                <th>Notes Name</th>
+                                                <th>File ID</th>
+                                                <th>Owner Name</th>
+                                                <th>File Name</th>
                                             </tr>
                                         </thead>
 
                                         <tbody>
-                                        <?php
-                                            $sql = "SELECT * FROM notes INNER JOIN user ON notes.userid = user.userid";
-                                            $query = $dbh->prepare($sql);
-                                            $query->execute();
-                                            $results = $query->fetchALL(PDO::FETCH_OBJ);
-
-                                            $cnt = 1;
-                                            if ($query->rowCount() > 0) {
-                                                # code...
-                                                foreach ($results as $result) {
-                                                    $userid = htmlentities($result->userid)
+                                        <?php 
+                                                $sql = "SELECT * FROM file INNER JOIN user ON file.userid = user.userid";
+                                                $query = $dbh->prepare($sql);
+                                                $query->execute();
+                                                $results = $query->fetchALL(PDO::FETCH_OBJ);
+    
+                                                $cnt = 1;
+                                                if ($query->rowCount() > 0) {
+                                                    # code...
+                                                    foreach ($results as $result) {
+                                                
                                             ?>
                                             <tr>
-                                                <td><?php echo htmlentities($result->notesid) ?></td>
-                                                <td><?php echo htmlentities($result->firstname) ?> <?php echo htmlentities($result->lastname) ?></td>
-                                                <td><?php echo htmlentities($result->notesname) ?></td>
-                                                
-                                            </tr>
+                                                <td><?php echo htmlentities($result->fileid) ?></td>
+                                                <td><?php echo htmlentities($result->firstname) ?><?php echo htmlentities($result->lastname) ?></td>
+                                                <td><a href="../files/<?php echo htmlentities($result->filename); ?>" download><?php echo htmlentities($result->filename); ?></a></td>
                                             <?php 
                                             }
-                                        }
-                                            ?>
+                                        }?>
+                                            </tr>
+                                            
                                         </tbody>
-                                        
                                     </table>
                                 </div>
                                 <!-- /.card-body -->

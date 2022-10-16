@@ -117,14 +117,14 @@ if (!isset($_SESSION['userid'])) {
                         </li>
 
                         <li class="nav-item">
-                            <a href="./usernotes.php" class="nav-link active">
+                            <a href="./usernotes.php" class="nav-link">
                                 <i class="nav-icon far fa-sticky-note"></i>
                                 <p>NOTES</p>
                             </a>
                         </li>
 
                         <li class="nav-item">
-                            <a href="./usersharednotes.php" class="nav-link">
+                            <a href="./usersharednotes.php" class="nav-link active">
                                 <i class="nav-icon fas fa-sticky-note"></i>
                                 <p>SHARED NOTES</p>
                             </a>
@@ -150,7 +150,7 @@ if (!isset($_SESSION['userid'])) {
                 <div class="container-fluid">
                     <div class="row mb-2">
                         <div class="col-sm-6">
-                            <h1>Notes Table</h1>
+                            <h1>Shared Notes Table</h1>
                         </div>
                     </div>
                 </div><!-- /.container-fluid -->
@@ -168,15 +168,16 @@ if (!isset($_SESSION['userid'])) {
 
                                         <thead>
                                             <tr>
-                                                <th>Notes ID</th>
-                                                <th>User Name</th>
-                                                <th>Notes Name</th>
+                                                <th>Share ID</th>
+                                                <th>Owner Name</th>
+                                                <th>Shared User</th>
+                                                <th>Shared Notes Name</th>
                                             </tr>
                                         </thead>
 
                                         <tbody>
                                         <?php
-                                            $sql = "SELECT * FROM notes INNER JOIN user ON notes.userid = user.userid";
+                                            $sql = "SELECT * FROM sharednotes INNER JOIN user ON sharednotes.ownerid = user.userid";
                                             $query = $dbh->prepare($sql);
                                             $query->execute();
                                             $results = $query->fetchALL(PDO::FETCH_OBJ);
@@ -185,20 +186,48 @@ if (!isset($_SESSION['userid'])) {
                                             if ($query->rowCount() > 0) {
                                                 # code...
                                                 foreach ($results as $result) {
-                                                    $userid = htmlentities($result->userid)
+                                                    $shareduserid = htmlentities($result->shareduserid);
+                                                    $notesid = htmlentities($result->notesid);
                                             ?>
                                             <tr>
-                                                <td><?php echo htmlentities($result->notesid) ?></td>
+                                                <td><?php echo htmlentities($result->shareid) ?></td>
                                                 <td><?php echo htmlentities($result->firstname) ?> <?php echo htmlentities($result->lastname) ?></td>
-                                                <td><?php echo htmlentities($result->notesname) ?></td>
+                                                <?php 
+                                                $sql = "SELECT * FROM user WHERE userid=$shareduserid";
+                                                $query = $dbh->prepare($sql);
+                                                $query->execute();
+                                                $results = $query->fetchALL(PDO::FETCH_OBJ);
+    
+                                                $cnt = 1;
+                                                if ($query->rowCount() > 0) {
+                                                    # code...
+                                                    foreach ($results as $result) {
                                                 
-                                            </tr>
-                                            <?php 
-                                            }
-                                        }
                                             ?>
+                                                <td><?php echo htmlentities($result->firstname) ?> <?php echo htmlentities($result->lastname) ?></td>
+                                                <?php }
+                                                }
+                                                ?>
+
+<?php 
+                                                $sql = "SELECT * FROM notes WHERE notesid=$notesid";
+                                                $query = $dbh->prepare($sql);
+                                                $query->execute();
+                                                $results = $query->fetchALL(PDO::FETCH_OBJ);
+    
+                                                $cnt = 1;
+                                                if ($query->rowCount() > 0) {
+                                                    # code...
+                                                    foreach ($results as $result) {
+                                                
+                                            ?>
+                                                <td><?php echo htmlentities($result->notesname) ?></td>
+                                                <?php }
+                                                }?>
+                                            </tr>
+                                            <?php }
+                                            }?>
                                         </tbody>
-                                        
                                     </table>
                                 </div>
                                 <!-- /.card-body -->

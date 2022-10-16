@@ -1,5 +1,5 @@
 <?php
-include 'D:\PROGRAMMING SOFTWARES\XAMPP\htdocs\Capstone\config.php';
+include 'C:\xampp\htdocs\AdminLTE-3.2.0\config.php';
 session_start();
 
 
@@ -346,7 +346,7 @@ include('notifs.php');
                         <?php
                         $id = $_SESSION['userid'];
                         $sql = "SELECT * FROM user
-                        WHERE userid != $id";
+                        WHERE userid != $id AND usertype != 'admin'";
                         $query = $dbh->prepare($sql);
                         $query->execute();
                         $results = $query->fetchALL(PDO::FETCH_OBJ);

@@ -14,7 +14,7 @@ foreach ($results as $result) {
   $userid = htmlentities($result->userid);
 
   if ($currentdate == $reminddate) {
-    $message = "My aybols naa kay reminder sa notes na $notesname";
+    $message = "You have a notification! $notesname";
     $header = "index.php?folderid=$headerid";
     $sql = "INSERT INTO notification(receiverid, message, date, header)VALUES($userid, '$message', NOW(), '$header')";
     $query = $dbh->prepare($sql);

@@ -1,5 +1,5 @@
 <?php
-include 'D:\PROGRAMMING SOFTWARES\XAMPP\htdocs\Capstone\config.php';
+include 'C:\xampp\htdocs\AdminLTE-3.2.0\config.php';
 session_start();
 $id = $_SESSION['userid'];
 
@@ -255,17 +255,7 @@ if (!isset($_SESSION['userid'])) {
                                             } ?>
 
                                         </tbody>
-                                        <tfoot>
-                                            <tr>
-                                                <th>Firstname</th>
-                                                <th>Lastname</th>
-                                                <th>Email</th>
-                                                <th>Notes Made</th>
-                                                <th>Shared Notes</th>
-                                                <th>Time Spent</th>
-                                                <th>File Stored</th>
-                                            </tr>
-                                        </tfoot>
+                                        
                                     </table>
                                 </div>
                                 <!-- /.card-body -->
@@ -313,7 +303,6 @@ if (!isset($_SESSION['userid'])) {
     <!-- AdminLTE App -->
     <script src="../dist/js/adminlte.min.js"></script>
     <!-- AdminLTE for demo purposes -->
-    <script src="../dist/js/demo.js"></script>
     <!-- Page specific script -->
     <script>
         $(function() {
