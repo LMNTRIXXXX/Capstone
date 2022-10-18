@@ -1,5 +1,5 @@
 <?php
-include 'C:\xampp\htdocs\AdminLTE-3.2.0\config.php';
+include 'D:\PROGRAMMING SOFTWARES\XAMPP\htdocs\Capstone\config.php';
 session_start();
 $id = $_SESSION['userid'];
 
@@ -22,8 +22,7 @@ if (isset($_POST['updateimage'])) {
   header("Location: profile.php");
 }
 
-if(isset($_POST['updateprofile']))
-{
+if (isset($_POST['updateprofile'])) {
   $email = $_POST['email'];
   $password = $_POST['password'];
   $firstname = $_POST['firstname'];
@@ -37,7 +36,6 @@ if(isset($_POST['updateprofile']))
   $query->bindParam(':lastname', $lastname, PDO::PARAM_STR);
   $query->execute();
   header("Location: profile.php");
-
 }
 include('notifs.php');
 ?>

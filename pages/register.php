@@ -1,5 +1,5 @@
 <?php
-include 'C:\xampp\htdocs\AdminLTE-3.2.0\config.php';
+include 'D:\PROGRAMMING SOFTWARES\XAMPP\htdocs\Capstone\config.php';
 session_start();
 
 if (isset($_SESSION['userid'])) {
@@ -11,15 +11,66 @@ if (isset($_POST['submit'])) {
     $lastname = strtoupper($_POST['lastname']);
     $email = strtolower($_POST['email']);
     $password = ($_POST['password']);
+    $vkey = md5(time() . $firstname);
 
-    $sql = "INSERT INTO user(firstname, lastname, email, password, usertype)VALUES(:firstname, :lastname, :email, :password, 'user')";
+    $sql = "SELECT * FROM user WHERE email =:email";
     $query = $dbh->prepare($sql);
-    $query->bindParam(':firstname', $firstname, PDO::PARAM_STR);
-    $query->bindParam(':lastname', $lastname, PDO::PARAM_STR);
     $query->bindParam(':email', $email, PDO::PARAM_STR);
-    $query->bindParam(':password', $password, PDO::PARAM_STR);
     $query->execute();
-    header("Location: login.php");
+    $results = $query->fetch(PDO::FETCH_ASSOC);
+    if ($query->rowCount() > 0) {
+        echo '<script>alert("Email is already taken!")</script>';
+    } else {
+        $sql = "INSERT INTO user(firstname, lastname, email, password, vkey, usertype)VALUES(:firstname, :lastname, :email, :password, '$vkey', 'user')";
+        $query = $dbh->prepare($sql);
+        $query->bindParam(':firstname', $firstname, PDO::PARAM_STR);
+        $query->bindParam(':lastname', $lastname, PDO::PARAM_STR);
+        $query->bindParam(':email', $email, PDO::PARAM_STR);
+        $query->bindParam(':password', $password, PDO::PARAM_STR);
+        $query->execute();
+        echo '<script>alert("Registered Successfully! Verification link is send to your email")</script>';
+
+        try {
+            include('phpmailer.php');
+
+            $mail->setFrom('420overflow@zohomail.com', 'Overflow Admin');
+            $mail->addAddress($email);     //Add a recipient
+            $message = " <!DOCTYPE html>
+                    <html lang='en' >
+                    <head>
+                    <meta charset='UTF-8'>
+                    <title>Verify Email</title>
+                    </head>
+                    <body>
+                    <div>
+                    <p>
+                    Hello there,
+                    </p>
+                    <p>
+                    </p>
+                    <p>
+                    Please click on the link below to verify your email.
+                    </p>
+                    <p>
+                    </p>
+                    <a href='http://localhost/capstone/pages/verify.php?vkey=$vkey'>
+                    Verify your email
+                    </a>
+                    </div>
+                    </body>
+                    </html>";
+            //Content
+            $mail->isHTML(true);
+            $mail->Subject = 'Email Verification';
+            $mail->Body    = $message;
+
+            $mail->send();
+        } catch (Exception $e) {
+            echo '<script>alert("Invalid Email address!")</script>';
+        }
+
+        echo "<script type ='text/javascript'> document.location.href='login.php' </script>";
+    }
 }
 ?>
 

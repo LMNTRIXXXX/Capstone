@@ -1,5 +1,5 @@
 <?php
-include 'C:\xampp\htdocs\AdminLTE-3.2.0\config.php';
+include 'D:\PROGRAMMING SOFTWARES\XAMPP\htdocs\Capstone\config.php';
 session_start();
 $id = $_SESSION['userid'];
 
@@ -167,22 +167,22 @@ if (!isset($_SESSION['userid'])) {
 
                                         <div class="info-box-content">
                                             <span class="info-box-text">Users</span>
-                                            <?php 
+                                            <?php
                                             $sql = "SELECT COUNT(*) AS total FROM user WHERE usertype !='admin'";
                                             $query = $dbh->prepare($sql);
                                             $query->execute();
                                             $results = $query->fetchALL(PDO::FETCH_OBJ);
- 
+
                                             $cnt = 1;
                                             if ($query->rowCount() > 0) {
                                                 # code...
                                                 foreach ($results as $result) {
                                             ?>
-                                            <span class="info-box-number">
-                                            <?php echo htmlentities($result->total) ?>
-                                            </span>
+                                                    <span class="info-box-number">
+                                                        <?php echo htmlentities($result->total) ?>
+                                                    </span>
                                             <?php }
-                                            }?>
+                                            } ?>
                                         </div>
                                         <!-- /.info-box-content -->
                                     </div>
@@ -198,22 +198,22 @@ if (!isset($_SESSION['userid'])) {
 
                                         <div class="info-box-content">
                                             <span class="info-box-text">Notes</span>
-                                            <?php 
+                                            <?php
                                             $sql = "SELECT COUNT(*) AS total FROM notes";
                                             $query = $dbh->prepare($sql);
                                             $query->execute();
                                             $results = $query->fetchALL(PDO::FETCH_OBJ);
- 
+
                                             $cnt = 1;
                                             if ($query->rowCount() > 0) {
                                                 # code...
                                                 foreach ($results as $result) {
                                             ?>
-                                            <span class="info-box-number">
-                                            <?php echo htmlentities($result->total) ?>
-                                            </span>
+                                                    <span class="info-box-number">
+                                                        <?php echo htmlentities($result->total) ?>
+                                                    </span>
                                             <?php }
-                                            }?>
+                                            } ?>
                                         </div>
                                         <!-- /.info-box-content -->
                                     </div>
@@ -233,22 +233,22 @@ if (!isset($_SESSION['userid'])) {
 
                                         <div class="info-box-content">
                                             <span class="info-box-text">Shared Notes</span>
-                                            <?php 
+                                            <?php
                                             $sql = "SELECT COUNT(*) AS total FROM sharednotes";
                                             $query = $dbh->prepare($sql);
                                             $query->execute();
                                             $results = $query->fetchALL(PDO::FETCH_OBJ);
- 
+
                                             $cnt = 1;
                                             if ($query->rowCount() > 0) {
                                                 # code...
                                                 foreach ($results as $result) {
                                             ?>
-                                            <span class="info-box-number">
-                                            <?php echo htmlentities($result->total) ?>
-                                            </span>
+                                                    <span class="info-box-number">
+                                                        <?php echo htmlentities($result->total) ?>
+                                                    </span>
                                             <?php }
-                                            }?>
+                                            } ?>
                                         </div>
                                         <!-- /.info-box-content -->
                                     </div>
@@ -264,22 +264,22 @@ if (!isset($_SESSION['userid'])) {
 
                                         <div class="info-box-content">
                                             <span class="info-box-text">Files</span>
-                                            <?php 
+                                            <?php
                                             $sql = "SELECT COUNT(*) AS total FROM file";
                                             $query = $dbh->prepare($sql);
                                             $query->execute();
                                             $results = $query->fetchALL(PDO::FETCH_OBJ);
- 
+
                                             $cnt = 1;
                                             if ($query->rowCount() > 0) {
                                                 # code...
                                                 foreach ($results as $result) {
                                             ?>
-                                            <span class="info-box-number">
-                                            <?php echo htmlentities($result->total) ?>
-                                            </span>
+                                                    <span class="info-box-number">
+                                                        <?php echo htmlentities($result->total) ?>
+                                                    </span>
                                             <?php }
-                                            }?>
+                                            } ?>
                                         </div>
                                         <!-- /.info-box-content -->
                                     </div>

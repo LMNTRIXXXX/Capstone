@@ -1,12 +1,11 @@
 <?php
-include 'C:\xampp\htdocs\AdminLTE-3.2.0\config.php';
+include 'D:\PROGRAMMING SOFTWARES\XAMPP\htdocs\Capstone\config.php';
 
 session_start();
 if (isset($_SESSION['userid'])) {
-    if($_GET['usertype']="admin"){
-    header("Location: admin.php");
-    }
-    else{
+    if ($_GET['usertype'] = "admin") {
+        header("Location: admin.php");
+    } else {
         header("Location: index.php");
     }
 }
@@ -22,24 +21,29 @@ if (isset($_POST['submit'])) {
     $query->execute();
     $results = $query->fetch(PDO::FETCH_ASSOC);
     if ($query->rowCount() > 0) {
+        $status = $results['emailstatus'];
+        $email = $results['email'];
+        if ($status != 0) {
+            $updateid = $results['userid'];
+            $usertype = $results['usertype'];
+            date_default_timezone_set('Asia/Singapore');
+            $currenttime = date("F j, Y H:i:s");
 
-        $updateid = $results['userid'];
-        $usertype = $results['usertype'];
-        date_default_timezone_set('Asia/Singapore');
-        $currenttime = date("F j, Y H:i:s");
+            $sql1 = "UPDATE user SET logindate = '$currenttime' WHERE userid = $updateid";
+            $query1 = $dbh->prepare($sql1);
+            $query1->execute();
 
-        $sql1 = "UPDATE user SET logindate = '$currenttime' WHERE userid = $updateid";
-        $query1 = $dbh->prepare($sql1);
-        $query1->execute();
-
-        session_regenerate_id();
-        $_SESSION['userid'] = $results['userid'];
-        $_SESSION['lastname'] = $results['lastname'];
-        $_SESSION['firstname'] = $results['firstname'];
-        if ($usertype == 'user') {
-            header("Location: index.php");
+            session_regenerate_id();
+            $_SESSION['userid'] = $results['userid'];
+            $_SESSION['lastname'] = $results['lastname'];
+            $_SESSION['firstname'] = $results['firstname'];
+            if ($usertype == 'user') {
+                header("Location: index.php");
+            } else {
+                header("Location: admin.php");
+            }
         } else {
-            header("Location: admin.php");
+            echo '<script>alert("This account has not been verified. An email was sent to ' . $email . ' ")</script>';
         }
     } else {
         echo '<script>alert("Wrong Email or Password")</script>';
@@ -78,6 +82,7 @@ if (isset($_POST['submit'])) {
                 <button name="submit" class="btn">Login</button>
             </div>
             <p class="login-register-text">Don't have an account yet? <a href="register.php">Register Here!</a></p>
+            <p class="login-register-text">Forgot your password? <a href="forgot-password.php">Click Here!</a></p>
         </form>
     </div>
 </body>
