@@ -1,5 +1,5 @@
 <?php
-include 'D:\PROGRAMMING SOFTWARES\XAMPP\htdocs\Capstone\config.php';
+include 'C:\xampp\htdocs\AdminLTE-3.2.0\config.php';
 
 session_start();
 if (isset($_SESSION['userid'])) {
@@ -44,7 +44,7 @@ if (isset($_POST['submit'])) {
                     </p>
                     <p>
                     </p>
-                    <a href='http://localhost/capstone/pages/new-password.php?vkey=$vkey'>
+                    <a href='http://localhost/adminLTE-3.2.0/pages/new-password.php?vkey=$vkey'>
                     Reset your password
                     </a>
                     </div>

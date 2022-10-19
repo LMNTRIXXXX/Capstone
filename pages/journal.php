@@ -1,5 +1,5 @@
 <?php
-include 'D:\PROGRAMMING SOFTWARES\XAMPP\htdocs\Capstone\config.php';
+include 'C:\xampp\htdocs\AdminLTE-3.2.0\config.php';
 session_start();
 $id = $_SESSION['userid'];
 
@@ -219,6 +219,7 @@ include('notifs.php');
                               <div class="note-header">
                                 <div class="title">
                                   <h6 style="font-weight:600;font-size:20px;"><?php echo htmlentities(date("F j, Y", strtotime($result->date))) ?></h6>
+                                  
                                 </div>
                               </div>
                               <div class="note-card-content">
@@ -285,8 +286,13 @@ include('notifs.php');
         <!-- Modal body -->
         <form method="POST">
           <div class="modal-body" style="color:black;">
-            <br>
             <div style="background-color: #FFFFFF; color:black;">
+              <script type="text/javascript" src="//js.nicedit.com/nicEdit-latest.js"></script>
+              <script type="text/javascript">
+                bkLib.onDomLoaded(function() {
+                  nicEditors.allTextAreas()
+                });
+              </script>
               <textarea name="content" style="width: 765px; height: 200px; padding: 20px;"></textarea>
             </div>
           </div>

@@ -1,6 +1,6 @@
 <?php
 session_start();
-include 'D:\PROGRAMMING SOFTWARES\XAMPP\htdocs\Capstone\config.php';
+include 'C:\xampp\htdocs\AdminLTE-3.2.0\config.php';
 
 if (isset($_GET['vkey'])) {
 

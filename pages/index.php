@@ -1,5 +1,5 @@
 <?php
-include 'D:\PROGRAMMING SOFTWARES\XAMPP\htdocs\Capstone\config.php';
+include 'C:\xampp\htdocs\AdminLTE-3.2.0\config.php';
 session_start();
 
 
@@ -321,7 +321,7 @@ include('notifs.php');
                       <div class="warning"> <i class="fa-solid fa-face-sad-tear"></i> Select Folder <i class="fa-solid fa-face-smile"></i></div>
                       <?php
                     } else {
-
+                      
                       $sql = "SELECT * FROM notes
                           INNER JOIN folder ON notes.folderid = folder.folderid
                           WHERE notes.folderid=$folderid";
