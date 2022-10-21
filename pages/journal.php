@@ -1,5 +1,5 @@
 <?php
-include 'C:\xampp\htdocs\AdminLTE-3.2.0\config.php';
+include 'D:\PROGRAMMING SOFTWARES\XAMPP\htdocs\Capstone\config.php';
 session_start();
 $id = $_SESSION['userid'];
 
@@ -21,6 +21,30 @@ if (isset($_POST['add_journal'])) {
   $query->execute();
   header("Location: journal.php");
 }
+
+if (isset($_POST['delete'])) {
+
+  $journalid = ($_POST['journalid']);
+
+  $sql = "DELETE FROM journal WHERE journalid=:journalid";
+  $query = $dbh->prepare($sql);
+  $query->bindParam(':journalid', $journalid, PDO::PARAM_STR);
+  $query->execute();
+  header("Location: journal.php");
+}
+if (isset($_POST['update'])) {
+
+  $updateid = ($_POST['updateid']);
+  $content = ($_POST['content']);
+
+  $sql = "UPDATE journal SET content=:content WHERE journalid=:updateid";
+  $query = $dbh->prepare($sql);
+  $query->bindParam(':content', $content, PDO::PARAM_STR);
+  $query->bindParam(':updateid', $updateid, PDO::PARAM_STR);
+  $query->execute();
+  header("Location: journal.php");
+}
+
 include('notifs.php');
 ?>
 
@@ -43,6 +67,9 @@ include('notifs.php');
   <link rel="stylesheet" href="../plugins/overlayScrollbars/css/OverlayScrollbars.min.css">
   <!-- Theme style -->
   <link rel="stylesheet" href="../dist/css/adminlte.min.css">
+  <link rel="stylesheet" href="summernote/summernote-bs4.css">
+
+
 </head>
 
 <body class="hold-transition dark-mode sidebar-mini layout-fixed layout-navbar-fixed layout-footer-fixed">
@@ -214,123 +241,162 @@ include('notifs.php');
                         foreach ($results as $result) {
                       ?>
 
-                          <a data-toggle="modal" href="#journalModal<?php echo htmlentities($result->journalid); ?>" style="color:black;display:flex;">
-                            <form class=" note-card" method="post" style="max-height:200px;min-height:100px;overflow:hidden;">
-                              <div class="note-header">
-                                <div class="title">
-                                  <h6 style="font-weight:600;font-size:20px;"><?php echo htmlentities(date("F j, Y", strtotime($result->date))) ?></h6>
-                                  
+
+                          <form class=" note-card" method="post" style="max-height:250px;min-height:100px;width:300px;overflow:auto">
+                            <div class="note-header">
+                              <div class="title">
+                                <h6 style="font-weight:600;font-size:20px;"><?php echo htmlentities(date("F j, Y", strtotime($result->date))) ?></h6>
+                              </div>
+                              <div class="buttons">
+                                <a data-toggle="modal" href="#myModal4<?php echo htmlentities($result->journalid); ?>"><i class="fa-solid fa-pen-to-square"></i></a>
+                                <button onclick="return confirm('Delete ?')" class="deletebutton" type="submit" name="delete"><i class="fa-solid fa-trash"></i></button>
+                              </div>
+                            </div>
+                            <div class="note-card-content">
+                              <div style="pointer-events: none;">
+                                <textarea class=" viewnote" name="content"><?php echo htmlentities($result->content); ?></textarea>
+                              </div>
+
+                              <input type="hidden" name="journalid" value="<?php echo htmlentities($result->journalid); ?>">
+                            </div>
+                          </form>
+
+
+
+
+
+                          <section>
+                            <div class="modal fade" id="myModal4<?php echo htmlentities($result->journalid); ?>">
+                              <div class="modal-dialog modal-lg">
+                                <div class="modal-content">
+                                  <!-- Modal Header -->
+                                  <div class="modal-header">
+                                    <h6 style="font-weight:600;font-size:20px;color:#FFFFFF;"><?php echo htmlentities(date("F j, Y", strtotime($result->date))) ?></h6>
+                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                  </div>
+                                  <!-- Modal body -->
+                                  <form method="POST">
+                                    <div class="modal-body">
+                                      <div id="sample" style="color: white;">
+                                        <textarea class="summernote" name="content"><?php echo htmlentities($result->content); ?></textarea>
+                                        <input type="hidden" value="<?php echo htmlentities($result->journalid); ?>" name="updateid">
+                                      </div>
+                                    </div>
+
+                                    <!-- Modal footer -->
+                                    <div class="modal-footer">
+                                      <button type="submit" class="btn btn-primary" name="update">Update</button>
+                                      <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                    </div>
+                                  </form>
                                 </div>
                               </div>
-                              <div class="note-card-content">
-                                <p><?php echo htmlentities($result->content) ?></p>
-                                <input type="hidden" name="notesid" value="test">
-                              </div>
-                            </form>
-                          </a>
+                          </section>
 
-                          <?php
-                          include('journalModal.php');
-                          ?>
-                    </div>
 
-                  <?php
+
+                        <?php
                         }
                       } else {
-                  ?>
-                  <div style="margin-top: 10px;" class="warning"> <i class="fa-solid fa-face-sad-tear"></i> No Journal Found! Make some <i class="fa-solid fa-face-smile"></i></div>
-                <?php } ?>
-                <br>
+                        ?>
+                        <div style="margin-top: 10px;" class="warning"> <i class="fa-solid fa-face-sad-tear"></i> No Journal Found! Make some <i class="fa-solid fa-face-smile"></i></div>
+                      <?php } ?>
+                      <br>
+                    </div>
+
+
+
+
                   </div>
-
-
-
-
                 </div>
-              </div>
-            </div><!-- /.col -->
+              </div><!-- /.col -->
 
-          </div><!-- /.row -->
-        </div><!-- /.container-fluid -->
-      </div>
-      <!-- /.content-header -->
-
-      <!-- Main content -->
-
-      <!-- /.content -->
-    </div>
-    <!-- /.content-wrapper -->
-
-    <!-- Control Sidebar -->
-
-    <!-- /.control-sidebar -->
-
-    <!-- Main Footer -->
-
-  </div>
-  <!-- ./wrapper -->
-
-  <!-- REQUIRED SCRIPTS -->
-
-  <!-- The Modal -->
-  <div class="modal fade" id="myModal">
-    <div class="modal-dialog modal-lg">
-      <div class="modal-content">
-
-        <!-- Modal Header -->
-        <div class="modal-header">
-          <h4 class="modal-title">Journal for <?php echo $date ?></h4>
-          <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div><!-- /.row -->
+          </div><!-- /.container-fluid -->
         </div>
+        <!-- /.content-header -->
 
-        <!-- Modal body -->
-        <form method="POST">
-          <div class="modal-body" style="color:black;">
-            <div style="background-color: #FFFFFF; color:black;">
-              <script type="text/javascript" src="//js.nicedit.com/nicEdit-latest.js"></script>
-              <script type="text/javascript">
-                bkLib.onDomLoaded(function() {
-                  nicEditors.allTextAreas()
-                });
-              </script>
-              <textarea name="content" style="width: 765px; height: 200px; padding: 20px;"></textarea>
+        <!-- Main content -->
+
+        <!-- /.content -->
+      </div>
+      <!-- /.content-wrapper -->
+
+      <!-- Control Sidebar -->
+
+      <!-- /.control-sidebar -->
+
+      <!-- Main Footer -->
+
+    </div>
+    <!-- ./wrapper -->
+
+    <!-- REQUIRED SCRIPTS -->
+
+    <!-- The Modal -->
+    <div class="modal fade" id="myModal">
+      <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+
+          <!-- Modal Header -->
+          <div class="modal-header">
+            <h4 class="modal-title">Journal for <?php echo $date ?></h4>
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+          </div>
+
+          <!-- Modal body -->
+          <form method="POST">
+            <div class="modal-body" style="color:black;">
+              <div style="background-color: #FFFFFF; color:black;">
+
+                <textarea class="summernote" name="content"></textarea>
+              </div>
             </div>
-          </div>
-          <!-- Modal footer -->
-          <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-            <button type="submit" class="btn btn-primary" name="add_journal">Add</button>
-          </div>
-        </form>
+            <!-- Modal footer -->
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+              <button type="submit" class="btn btn-primary" name="add_journal">Add</button>
+            </div>
+          </form>
+        </div>
       </div>
     </div>
-  </div>
-  <!-- END MODALS -->
+    <!-- END MODALS -->
 
-  <!-- jQuery -->
-  <script src="../plugins/jquery/jquery.min.js"></script>
-  <!-- Bootstrap -->
-  <script src="../plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
-  <!-- overlayScrollbars -->
-  <script src="../plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js"></script>
-  <!-- AdminLTE App -->
-  <script src="../dist/js/adminlte.js"></script>
+    <!-- jQuery -->
+    <script src="../plugins/jquery/jquery.min.js"></script>
+    <!-- Bootstrap -->
+    <script src="../plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <!-- overlayScrollbars -->
+    <script src="../plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js"></script>
+    <!-- AdminLTE App -->
+    <script src="../dist/js/adminlte.js"></script>
 
-  <!-- PAGE PLUGINS -->
-  <!-- jQuery Mapael -->
-  <script src="../plugins/jquery-mousewheel/jquery.mousewheel.js"></script>
-  <script src="../plugins/raphael/raphael.min.js"></script>
-  <script src="../plugins/jquery-mapael/jquery.mapael.min.js"></script>
-  <script src="../plugins/jquery-mapael/maps/usa_states.min.js"></script>
-  <!-- ChartJS -->
-  <script src="../plugins/chart.js/Chart.min.js"></script>
+    <!-- PAGE PLUGINS -->
+    <!-- jQuery Mapael -->
+    <script src="../plugins/jquery-mousewheel/jquery.mousewheel.js"></script>
+    <script src="../plugins/raphael/raphael.min.js"></script>
+    <script src="../plugins/jquery-mapael/jquery.mapael.min.js"></script>
+    <script src="../plugins/jquery-mapael/maps/usa_states.min.js"></script>
+    <!-- ChartJS -->
+    <script src="../plugins/chart.js/Chart.min.js"></script>
 
 
-  <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
-  <script src="../dist/js/pages/dashboard2.js"></script>
-  <script src="js/notif.js"></script>
-  <script src="js/journalnotif.js"></script>
-  <script src="js/timemanagement.js"></script>
+    <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
+    <script src="../dist/js/pages/dashboard2.js"></script>
+    <script src="js/notif.js"></script>
+    <script src="js/journalnotif.js"></script>
+    <script src="js/timemanagement.js"></script>
+    <script src="summernote/summernote-bs4.js"></script>
+    <script>
+      $('.summernote').summernote({
+        height: 400,
+      });
+      $('.viewnote').summernote({
+        toolbar: false,
+      });
+    </script>
+
 </body>
 
 </html>

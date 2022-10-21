@@ -1,5 +1,5 @@
 <?php
-include 'C:\xampp\htdocs\AdminLTE-3.2.0\config.php';
+include 'D:\PROGRAMMING SOFTWARES\XAMPP\htdocs\Capstone\config.php';
 session_start();
 
 
@@ -11,13 +11,11 @@ if (!isset($_SESSION['userid'])) {
 if (isset($_POST['update'])) {
 
   $updateid = ($_POST['updateid']);
-  $notesname = ($_POST['notesname']);
   $notescontent = ($_POST['notescontent']);
-  $folderid = ($_GET['folderid']);
 
-  $sql = "UPDATE notes SET notesname=:notesname, notescontent=:notescontent WHERE notesid=:updateid";
+
+  $sql = "UPDATE notes SET notescontent=:notescontent WHERE notesid=:updateid";
   $query = $dbh->prepare($sql);
-  $query->bindParam(':notesname', $notesname, PDO::PARAM_STR);
   $query->bindParam(':notescontent', $notescontent, PDO::PARAM_STR);
   $query->bindParam(':updateid', $updateid, PDO::PARAM_STR);
   $query->execute();
@@ -35,7 +33,6 @@ include('notifs.php');
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>OVERFLOW</title>
 
-  <script src="https://cdn.ckeditor.com/4.19.1/standard/ckeditor.js"></script>
 
 
 
@@ -52,6 +49,8 @@ include('notifs.php');
   <link rel="stylesheet" href="../plugins/overlayScrollbars/css/OverlayScrollbars.min.css">
   <!-- Theme style -->
   <link rel="stylesheet" href="../dist/css/adminlte.min.css">
+
+  <link rel="stylesheet" href="summernote/summernote-bs4.css">
 
 </head>
 
@@ -208,7 +207,7 @@ include('notifs.php');
                         # code...
                         foreach ($results as $result) {
                       ?>
-                          <form class="note-card" method="post">
+                          <form class="note-card" method="post" style="width: 300px;max-height: 200px;overflow:auto;">
                             <div class="note-header">
                               <div class="title">
                                 <h1><?php echo htmlentities($result->notesname) ?></h1>
@@ -219,7 +218,9 @@ include('notifs.php');
                             </div>
 
                             <div class="note-card-content">
-                              <p><?php echo htmlentities($result->notescontent) ?></p>
+                              <div style="pointer-events: none;">
+                                <textarea class=" viewnote" name="content"><?php echo htmlentities($result->notescontent); ?></textarea>
+                              </div>
                               <input type="hidden" name="notesid" value="<?php echo htmlentities($result->notesid) ?>">
                             </div>
                           </form>
@@ -292,33 +293,7 @@ include('notifs.php');
   <!--Large Modal-->
 
   <!-- The Modal -->
-  <div class="modal fade" id="myModal">
-    <div class="modal-dialog modal-lg">
-      <div class="modal-content">
 
-        <!-- Modal Header -->
-        <div class="modal-header">
-          <h4 class="modal-title">Add Notes</h4>
-          <button type="button" class="close" data-dismiss="modal">&times;</button>
-        </div>
-
-        <!-- Modal body -->
-        <form method="POST">
-          <div class="modal-body" style="color:black;">
-            <input type="text" class="form-control" placeholder="Notes Name" name="notesname" required style="color:black; background-color:white;">
-            <br>
-            <div style="background-color: #FFFFFF; color:black;">
-              <textarea name="notescontent" style="width: 765px; height: 200px; padding: 20px;"></textarea>
-            </div>
-          </div>
-          <!-- Modal footer -->
-          <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-            <button type="submit" class="btn btn-primary" name="submits">Add</button>
-          </div>
-      </div>
-    </div>
-  </div>
 
 
 
@@ -357,6 +332,17 @@ include('notifs.php');
   <script src="js/notif.js"></script>
   <script src="js/journalnotif.js"></script>
   <script src="js/timemanagement.js"></script>
+
+  <script src="summernote/summernote-bs4.js"></script>
+  <script>
+    $('.summernote').summernote({
+      height: 300,
+    });
+    $('.viewnote').summernote({
+      toolbar: false,
+    });
+  </script>
+
 </body>
 
 </html>

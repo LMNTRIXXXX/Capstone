@@ -111,7 +111,7 @@
     max-width: 400px;
 }
 .note-card .note-header .title{
-    max-width: 150px;
+    display: flex;
 }
 .note-card .note-header .buttons{
     padding-top: 5px;
@@ -243,3 +243,11 @@
     
     width: 600px;
 }
+.note-editor.note-frame .note-editing-area .note-editable, .note-editor.note-airframe .note-editing-area .note-editable{
+ background: white;
+ color: black;
+ height: auto;
+ border: none;
+ overflow: auto;
+}
+

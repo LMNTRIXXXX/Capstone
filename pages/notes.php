@@ -16,15 +16,7 @@
           <br>
 
           <div id="sample" style="background-color: #FFFFFF; color:black;">
-            <script type="text/javascript" src="//js.nicedit.com/nicEdit-latest.js"></script>
-            <script type="text/javascript">
-              bkLib.onDomLoaded(function() {
-                nicEditors.allTextAreas()
-              });
-            </script>
-
-            <textarea name="notescontent" style="width: 765px; height: 200px; padding: 20px;"> <?php echo htmlentities($result->notescontent); ?>
-</textarea>
+            <textarea class="summernote" name="notescontent"><?php echo htmlentities($result->notescontent); ?></textarea>
           </div>
           <input type="hidden" name="updateid" value="<?php echo htmlentities($result->notesid); ?>">
 

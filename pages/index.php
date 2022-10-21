@@ -1,5 +1,5 @@
 <?php
-include 'C:\xampp\htdocs\AdminLTE-3.2.0\config.php';
+include 'D:\PROGRAMMING SOFTWARES\XAMPP\htdocs\Capstone\config.php';
 session_start();
 
 
@@ -125,9 +125,6 @@ include('notifs.php');
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>OVERFLOW</title>
 
-  <script src="https://cdn.ckeditor.com/4.19.1/standard/ckeditor.js"></script>
-
-
 
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
@@ -142,7 +139,7 @@ include('notifs.php');
   <link rel="stylesheet" href="../plugins/overlayScrollbars/css/OverlayScrollbars.min.css">
   <!-- Theme style -->
   <link rel="stylesheet" href="../dist/css/adminlte.min.css">
-
+  <link rel="stylesheet" href="summernote/summernote-bs4.css">
 </head>
 
 <body class="hold-transition dark-mode sidebar-mini layout-fixed layout-navbar-fixed layout-footer-fixed">
@@ -321,7 +318,7 @@ include('notifs.php');
                       <div class="warning"> <i class="fa-solid fa-face-sad-tear"></i> Select Folder <i class="fa-solid fa-face-smile"></i></div>
                       <?php
                     } else {
-                      
+
                       $sql = "SELECT * FROM notes
                           INNER JOIN folder ON notes.folderid = folder.folderid
                           WHERE notes.folderid=$folderid";
@@ -334,20 +331,21 @@ include('notifs.php');
                         foreach ($results as $result) {
                           $notesid = $result->notesid;
                       ?>
-                          <form class="note-card" method="post">
+                          <form class="note-card" method="post" style="max-height: 200px;overflow:auto;">
                             <div class="note-header">
-                              <div class="title">
+                              <div class="title" style="padding-bottom: 20px;">
                                 <h1><?php echo htmlentities($result->notesname) ?></h1>
                               </div>
                               <div class="buttons">
-                                <a data-toggle="modal" href="#myModal4<?php echo htmlentities($result->notesid); ?>" style="padding-right:7px;"><i class="fas fa-eye"></i></a>
                                 <a data-toggle="modal" href="#myModal1<?php echo htmlentities($result->notesid); ?>"><i class="fa-solid fa-pen-to-square"></i></a>
                                 <button onclick="return confirm('Delete ?')" class="deletebutton" type="submit" name="delete"><i class="fa-solid fa-trash"></i></button>
                               </div>
                             </div>
 
                             <div class="note-card-content">
-                              <p><?php echo htmlentities($result->notescontent) ?></p>
+                              <div style="pointer-events: none;">
+                                <textarea class=" viewnote" name="content"><?php echo htmlentities($result->notescontent); ?></textarea>
+                              </div>
                               <input type="hidden" name="notesid" value="<?php echo htmlentities($result->notesid) ?>">
                             </div>
                           </form>
@@ -464,13 +462,7 @@ include('notifs.php');
             <input type="text" class="form-control" placeholder="Notes Name" name="notesname" required style="color:black; background-color:white;">
             <br>
             <div style="background-color: #FFFFFF; color:black;">
-              <script type="text/javascript" src="//js.nicedit.com/nicEdit-latest.js"></script>
-              <script type="text/javascript">
-                bkLib.onDomLoaded(function() {
-                  nicEditors.allTextAreas()
-                });
-              </script>
-              <textarea name="notescontent" style="width: 765px; height: 200px; padding: 20px;"></textarea>
+              <textarea class="summernote" name="notescontent"></textarea>
             </div>
             <span style="color:white;">Remind Date:</span>
             <input type="date" class="form-control" placeholder="date" name="reminddate" style="color:black; background-color:white; margin-top:5px;">
@@ -522,6 +514,15 @@ include('notifs.php');
   <script src="js/notif.js"></script>
   <script src="js/timemanagement.js"></script>
   <script src="js/journalnotif.js"></script>
+  <script src="summernote/summernote-bs4.js"></script>
+  <script>
+    $('.summernote').summernote({
+      height: 300,
+    });
+    $('.viewnote').summernote({
+      toolbar: false,
+    });
+  </script>
 </body>
 
 </html>

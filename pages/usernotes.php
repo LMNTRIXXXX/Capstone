@@ -1,5 +1,5 @@
 <?php
-include 'C:\xampp\htdocs\AdminLTE-3.2.0\config.php';
+include 'D:\PROGRAMMING SOFTWARES\XAMPP\htdocs\Capstone\config.php';
 session_start();
 $id = $_SESSION['userid'];
 
@@ -175,7 +175,7 @@ if (!isset($_SESSION['userid'])) {
                                         </thead>
 
                                         <tbody>
-                                        <?php
+                                            <?php
                                             $sql = "SELECT * FROM notes INNER JOIN user ON notes.userid = user.userid";
                                             $query = $dbh->prepare($sql);
                                             $query->execute();
@@ -187,18 +187,18 @@ if (!isset($_SESSION['userid'])) {
                                                 foreach ($results as $result) {
                                                     $userid = htmlentities($result->userid)
                                             ?>
-                                            <tr>
-                                                <td><?php echo htmlentities($result->notesid) ?></td>
-                                                <td><?php echo htmlentities($result->firstname) ?> <?php echo htmlentities($result->lastname) ?></td>
-                                                <td><?php echo htmlentities($result->notesname) ?></td>
-                                                
-                                            </tr>
-                                            <?php 
+                                                    <tr>
+                                                        <td><?php echo htmlentities($result->notesid) ?></td>
+                                                        <td><?php echo htmlentities($result->firstname) ?> <?php echo htmlentities($result->lastname) ?></td>
+                                                        <td><?php echo htmlentities($result->notesname) ?></td>
+
+                                                    </tr>
+                                            <?php
+                                                }
                                             }
-                                        }
                                             ?>
                                         </tbody>
-                                        
+
                                     </table>
                                 </div>
                                 <!-- /.card-body -->
